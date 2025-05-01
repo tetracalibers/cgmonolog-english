@@ -115,7 +115,7 @@ export class LocalSpeaker {
     return this.#status
   }
 
-  get isRepeat() {
+  get repeat(): Writable<boolean> {
     return this.#repeat
   }
 

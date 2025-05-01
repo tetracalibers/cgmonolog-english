@@ -12,7 +12,7 @@
   let { text, speaker }: Props = $props()
 
   let status = $derived(speaker.status)
-  let repeat = $derived(speaker.isRepeat)
+  let repeat = $derived(speaker.repeat)
   let rate = $derived(speaker.rate)
 
   const togglePlay = () => {
@@ -26,7 +26,7 @@
   }
 
   const toggleRepeat = () => {
-    repeat.update((prev) => !prev)
+    speaker.repeat = !$repeat
   }
 
   const PLAYBACK_SPEEDS = [1, 0.8, 0.75, 0.5, 0.25]
