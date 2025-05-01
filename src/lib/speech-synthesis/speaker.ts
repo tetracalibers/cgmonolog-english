@@ -85,7 +85,6 @@ export class LocalSpeaker {
   #ctx!: SpeakerContext
   #audio!: SpeechSynthesisUtterance
   #repeat: boolean = false
-  #queued: boolean = false
   #status: "idle" | "playing" | "paused" = "idle"
 
   init = async (ctx: SpeakerContext, option: SpeakerOption = defaultSpeakerOption) => {
@@ -130,7 +129,6 @@ export class LocalSpeaker {
   speak(text: string) {
     this.stop()
     this.#audio.text = text
-    this.#queued = true
     this.#status = "playing"
 
     this.#audio.onstart = () => (this.#status = "playing")
