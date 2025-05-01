@@ -2,7 +2,11 @@
   import HeadlessAudioPlayer from "./core/HeadlessAudioPlayer.svelte"
   import Controls from "./view/Controls.svelte"
 
-  export let src: string
+  interface Props {
+    src: string
+  }
+
+  let { src }: Props = $props()
 </script>
 
 <HeadlessAudioPlayer src={src}>

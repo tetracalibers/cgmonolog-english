@@ -24,15 +24,15 @@
 
 <div class="_card h-40 w-[290px] px-6 py-6 flex flex-col justify-center items-center rounded-lg text-slate-400">
   <div class="flex items-center space-x-3">
-    <button on:click={() => toggle(repeat)}>
+    <button onclick={() => toggle(repeat)}>
       <RepeatIcon class={`${$repeat ? "text-purple-400" : "text-slate-300"}`} />
     </button>
 
-    <button on:click={() => seekBy(-1 * $currentTime)}>
+    <button onclick={() => seekBy(-1 * $currentTime)}>
       <SkipBackIcon />
     </button>
     <button
-      on:click={() => toggle(paused)}
+      onclick={() => toggle(paused)}
       class="_play-button w-12 h-12 rounded-full flex justify-center items-center text-white bg-gradient-to-br from-[#5583EE] to-[#41D8DD]"
     >
       {#if $playing}
@@ -42,13 +42,13 @@
       {/if}
     </button>
 
-    <button on:click={() => seekBy($duration - $currentTime)}>
+    <button onclick={() => seekBy($duration - $currentTime)}>
       <SkipForwardIcon />
     </button>
 
     <button
       class="w-[4ch] h-5 flex items-center justify-center rounded-full border border-current"
-      on:click={handlePlaybackSpeedClick}
+      onclick={handlePlaybackSpeedClick}
     >
       <span class="text-xs font-semibold">{$playbackRate}x</span>
     </button>

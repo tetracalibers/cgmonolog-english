@@ -3,13 +3,17 @@
   import { derived, writable } from "svelte/store"
   import { setAudioContext } from "./context"
 
-  /* props -------------------------------------- */
+  interface Props {
+    /* props -------------------------------------- */
+    src: string
+    children?: import("svelte").Snippet
+  }
 
-  export let src: string
+  let { src, children }: Props = $props()
 
   /* state -------------------------------------- */
 
-  let audio: HTMLAudioElement | null = null
+  let audio: HTMLAudioElement | null = $state(null)
 
   let duration = writable(0)
   let currentTime = writable(0)
@@ -81,6 +85,6 @@
     bind:this={audio}
     src={src}
     style="display: none;"
-  />
-  <slot />
+  ></audio>
+  {@render children?.()}
 </div>

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from "svelte/legacy"
+
   import VolumeMute from "~icons/carbon/volume-mute"
   import VolumeUp from "~icons/carbon/volume-up"
   import RangeSlider from "./RangeSlider.svelte"
@@ -8,12 +10,14 @@
 
   const { volume, muted } = getAudioContext()
 
-  let volumePercentage = 100
-  $: $volume = volumePercentage / 100
+  let volumePercentage = $state(100)
+  run(() => {
+    $volume = volumePercentage / 100
+  })
 </script>
 
 <div class="volume flex justify-center relative">
-  <button on:click={() => toggle(muted)}>
+  <button onclick={() => toggle(muted)}>
     {#if $muted}
       <VolumeMute />
     {:else}

@@ -1,16 +1,20 @@
 <script lang="ts">
-  export let min = 0
-  export let max = 1
-  export let value
-  export let step = 0.01
+  interface Props {
+    min?: number
+    max?: number
+    value: any
+    step?: number
+  }
+
+  let { min = 0, max = 1, value = $bindable(), step = 0.01 }: Props = $props()
 </script>
 
 <div class="relative flex items-center flex-1">
-  <div class="_progress h-2 w-full rounded-md absolute shadow-md shadow-white" />
+  <div class="_progress h-2 w-full rounded-md absolute shadow-md shadow-white"></div>
   <div
     class="h-2 rounded-md bg-gradient-to-r from-[#ABC7FF] to-[#C1E3FF] absolute"
     style={`width: ${(value * 100) / max}%;`}
-  />
+  ></div>
   <input
     bind:value={value}
     min={min}
