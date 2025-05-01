@@ -85,7 +85,7 @@ export class LocalSpeaker {
   #ctx!: SpeakerContext
   #audio!: SpeechSynthesisUtterance
   #repeat: boolean = false
-  #status: "idle" | "playing" | "paused" = "idle"
+  #status: Writable<"idle" | "playing" | "paused"> = writable("idle")
 
   init = async (ctx: SpeakerContext, option: SpeakerOption = defaultSpeakerOption) => {
     const { lang, rate } = option
@@ -110,12 +110,8 @@ export class LocalSpeaker {
     return this.#audio.voice
   }
 
-  get isSpeaking() {
-    return this.#status === "playing"
-  }
-
-  get isPaused() {
-    return this.#status === "paused"
+  get status() {
+    return this.#status
   }
 
   get isRepeat() {
@@ -133,17 +129,17 @@ export class LocalSpeaker {
   speak(text: string) {
     this.stop()
     this.#audio.text = text
-    this.#status = "playing"
+    this.#status.set("playing")
 
-    this.#audio.onstart = () => (this.#status = "playing")
+    this.#audio.onstart = () => this.#status.set("playing")
     this.#audio.onend = () => {
-      this.#status = "idle"
+      this.#status.set("idle")
       if (this.isRepeat) {
         this.speak(text)
       }
     }
-    this.#audio.onpause = () => (this.#status = "paused")
-    this.#audio.onresume = () => (this.#status = "playing")
+    this.#audio.onpause = () => this.#status.set("paused")
+    this.#audio.onresume = () => this.#status.set("playing")
 
     window.speechSynthesis.speak(this.#audio)
   }

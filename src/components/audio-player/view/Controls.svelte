@@ -11,10 +11,12 @@
 
   let { text, speaker }: Props = $props()
 
+  let status = $derived(speaker.status)
+
   const togglePlay = () => {
-    if (speaker.isSpeaking) {
+    if ($status === "playing") {
       speaker.pause()
-    } else if (speaker.isPaused) {
+    } else if ($status === "paused") {
       speaker.resume()
     } else {
       speaker.speak(text)
@@ -39,7 +41,7 @@
   </button>
 
   <button onclick={() => togglePlay()} class="play-button">
-    {#if speaker.isSpeaking}
+    {#if $status === "playing"}
       <PauseIcon />
     {:else}
       <PlayIcon />
