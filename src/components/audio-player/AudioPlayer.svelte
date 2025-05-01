@@ -8,7 +8,7 @@
   }
 
   let { text }: Props = $props()
-  let speaker = $state(new LocalSpeaker())
+  let speaker = new LocalSpeaker()
 </script>
 
 {#await speaker.init(speakerCtx)}
