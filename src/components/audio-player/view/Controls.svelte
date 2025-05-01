@@ -2,15 +2,14 @@
   import PauseIcon from "~icons/carbon/pause-filled"
   import PlayIcon from "~icons/carbon/play-filled-alt"
   import RepeatIcon from "~icons/carbon/repeat"
-  import { onMount } from "svelte"
-  import { LocalSpeaker, SpeakerContext } from "$/lib/speech-synthesis/speaker"
+  import { LocalSpeaker } from "$/lib/speech-synthesis/speaker"
 
   interface Props {
-    text: string;
-    speaker: LocalSpeaker;
+    text: string
+    speaker: LocalSpeaker
   }
 
-  let { text, speaker = $bindable() }: Props = $props();
+  let { text, speaker = $bindable() }: Props = $props()
 
   const togglePlay = () => {
     if (speaker.isSpeaking) {
@@ -29,21 +28,23 @@
 </script>
 
 <div class="controls">
-  <button class="repeat-button" onclick={() => speaker.toggleRepeat()} class:--repeat={speaker.isRepeatON}>
-    <RepeatIcon width="1.2em" height="1.2em" />
-  </button>
+  {#if speaker}
+    <button class="repeat-button" onclick={() => speaker.toggleRepeat()} class:--repeat={speaker.isRepeatON}>
+      <RepeatIcon width="1.2em" height="1.2em" />
+    </button>
 
-  <button onclick={togglePlay} class="play-button">
-    {#if speaker.isSpeaking}
-      <PauseIcon />
-    {:else}
-      <PlayIcon />
-    {/if}
-  </button>
+    <button onclick={togglePlay} class="play-button">
+      {#if speaker.isSpeaking}
+        <PauseIcon />
+      {:else}
+        <PlayIcon />
+      {/if}
+    </button>
 
-  <button class="speed-button" onclick={changeSpeed}>
-    <span class="speed-label">{currentSpeed}x</span>
-  </button>
+    <button class="speed-button" onclick={changeSpeed}>
+      <span class="speed-label">{currentSpeed}x</span>
+    </button>
+  {/if}
 </div>
 
 <style>

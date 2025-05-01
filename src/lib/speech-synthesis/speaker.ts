@@ -82,16 +82,15 @@ export class SpeakerContext {
 }
 
 export class LocalSpeaker {
-  #ctx: SpeakerContext
-  #audio: SpeechSynthesisUtterance
+  #ctx!: SpeakerContext
+  #audio!: SpeechSynthesisUtterance
   #repeat: boolean = false
   #queued: boolean = false
 
-  constructor(ctx: SpeakerContext, options: SpeakerOption = defaultSpeakerOption) {
-    const { lang, rate } = options
+  init = (ctx: SpeakerContext, option: SpeakerOption = defaultSpeakerOption) => {
+    const { lang, rate } = option
 
     this.#ctx = ctx
-
     this.#audio = new SpeechSynthesisUtterance()
     this.#audio.lang = lang ?? defaultSpeakerOption.lang
     this.#audio.rate = rate ?? defaultSpeakerOption.rate
@@ -101,7 +100,11 @@ export class LocalSpeaker {
       if (!voice) return
       this.#audio.voice = voice
     })
+
+    return this
   }
+
+  constructor() {}
 
   get activeVoice() {
     return this.#audio.voice

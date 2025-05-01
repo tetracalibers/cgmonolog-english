@@ -1,19 +1,16 @@
 <script lang="ts">
-  import { LocalSpeaker, type SpeakerContext } from "$/lib/speech-synthesis/speaker"
+  import { LocalSpeaker } from "$/lib/speech-synthesis/speaker"
   import Controls from "./view/Controls.svelte"
-  import { onMount } from "svelte"
+  import { speakerCtx } from "$/lib/speech-synthesis/use-speaker"
 
   interface Props {
     text: string
-    speakerCtx: SpeakerContext
   }
 
-  let { text, speakerCtx }: Props = $props()
-  let speaker = $state<LocalSpeaker | null>(null)
-
-  onMount(() => {
-    speaker = new LocalSpeaker(speakerCtx)
-  })
+  let { text }: Props = $props()
+  let speaker = new LocalSpeaker()
 </script>
 
-<Controls text={text} speaker={speaker} />
+{#if speaker.init(speakerCtx)}
+  <Controls text={text} speaker={speaker} />
+{/if}
