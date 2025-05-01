@@ -5,8 +5,12 @@
   import { onMount } from "svelte"
   import { LocalSpeaker, SpeakerContext } from "$/lib/speech-synthesis/speaker"
 
-  export let text: string
-  export let speaker: LocalSpeaker
+  interface Props {
+    text: string;
+    speaker: LocalSpeaker;
+  }
+
+  let { text, speaker = $bindable() }: Props = $props();
 
   const togglePlay = () => {
     if (speaker.isSpeaking) {
@@ -17,11 +21,11 @@
   }
 
   const PLAYBACK_SPEEDS = [1, 0.8, 0.75, 0.5]
-  let speedIndex = 0
+  let speedIndex = $state(0)
   const changeSpeed = () => {
     speaker.rate = PLAYBACK_SPEEDS[++speedIndex % PLAYBACK_SPEEDS.length]
   }
-  $: currentSpeed = PLAYBACK_SPEEDS[speedIndex]
+  let currentSpeed = $derived(PLAYBACK_SPEEDS[speedIndex])
 </script>
 
 <div class="controls">
