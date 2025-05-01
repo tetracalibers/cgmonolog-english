@@ -150,6 +150,10 @@ export class LocalSpeaker {
 
   stop() {
     window.speechSynthesis.cancel()
+    this.#audio.onstart = null
+    this.#audio.onend = null
+    this.#audio.onpause = null
+    this.#audio.onresume = null
   }
 
   pause() {
