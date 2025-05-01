@@ -9,7 +9,7 @@
     speaker: LocalSpeaker
   }
 
-  let { text, speaker = $bindable() }: Props = $props()
+  let { text, speaker }: Props = $props()
 
   const togglePlay = () => {
     if (speaker.isSpeaking) {
@@ -28,23 +28,21 @@
 </script>
 
 <div class="controls">
-  {#if speaker}
-    <button class="repeat-button" onclick={() => speaker.toggleRepeat()} class:--repeat={speaker.isRepeatON}>
-      <RepeatIcon width="1.2em" height="1.2em" />
-    </button>
+  <button class="repeat-button" onclick={() => speaker.toggleRepeat()} class:--repeat={speaker.isRepeatON}>
+    <RepeatIcon width="1.2em" height="1.2em" />
+  </button>
 
-    <button onclick={togglePlay} class="play-button">
-      {#if speaker.isSpeaking}
-        <PauseIcon />
-      {:else}
-        <PlayIcon />
-      {/if}
-    </button>
+  <button onclick={() => togglePlay()} class="play-button">
+    {#if speaker.isSpeaking}
+      <PauseIcon />
+    {:else}
+      <PlayIcon />
+    {/if}
+  </button>
 
-    <button class="speed-button" onclick={changeSpeed}>
-      <span class="speed-label">{currentSpeed}x</span>
-    </button>
-  {/if}
+  <button class="speed-button" onclick={changeSpeed}>
+    <span class="speed-label">{currentSpeed}x</span>
+  </button>
 </div>
 
 <style>

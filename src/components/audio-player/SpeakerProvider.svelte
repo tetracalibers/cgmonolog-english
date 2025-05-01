@@ -7,8 +7,6 @@
   let { children }: Props = $props()
 </script>
 
-<!-- <Drawer><SelectVoice bind:activeVoice={activeVoice} bind:voices={voices} /></Drawer> -->
-
 {#await speakerCtx.init()}
   <p>waiting for the promise to resolve...</p>
 {:then}

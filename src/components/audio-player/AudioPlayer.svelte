@@ -8,9 +8,13 @@
   }
 
   let { text }: Props = $props()
-  let speaker = new LocalSpeaker()
+  let speaker = $state(new LocalSpeaker())
 </script>
 
-{#if speaker.init(speakerCtx)}
-  <Controls text={text} speaker={speaker} />
-{/if}
+{#await speaker.init(speakerCtx)}
+  <p>waiting for the promise to resolve...</p>
+{:then instance}
+  <Controls text={text} speaker={instance} />
+{:catch error}
+  <p>Something went wrong: {error.message}</p>
+{/await}

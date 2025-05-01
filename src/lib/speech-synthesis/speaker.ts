@@ -86,8 +86,9 @@ export class LocalSpeaker {
   #audio!: SpeechSynthesisUtterance
   #repeat: boolean = false
   #queued: boolean = false
+  #status: "idle" | "playing" | "paused" = "idle"
 
-  init = (ctx: SpeakerContext, option: SpeakerOption = defaultSpeakerOption) => {
+  init = async (ctx: SpeakerContext, option: SpeakerOption = defaultSpeakerOption) => {
     const { lang, rate } = option
 
     this.#ctx = ctx
@@ -101,7 +102,7 @@ export class LocalSpeaker {
       this.#audio.voice = voice
     })
 
-    return this
+    return Promise.resolve(this)
   }
 
   constructor() {}
@@ -111,7 +112,7 @@ export class LocalSpeaker {
   }
 
   get isSpeaking() {
-    return window.speechSynthesis.speaking
+    return this.#status === "playing"
   }
 
   get isRepeatON() {
@@ -123,16 +124,20 @@ export class LocalSpeaker {
   }
 
   speak(text: string) {
+    this.stop()
     this.#audio.text = text
     this.#queued = true
+    this.#status = "playing"
     window.speechSynthesis.speak(this.#audio)
   }
 
   stop() {
+    this.#status = "idle"
     window.speechSynthesis.cancel()
   }
 
   pause() {
+    this.#status = "paused"
     window.speechSynthesis.pause()
   }
 
@@ -141,6 +146,7 @@ export class LocalSpeaker {
       this.speak(text)
       return
     }
+    this.#status = "playing"
     window.speechSynthesis.resume()
   }
 
