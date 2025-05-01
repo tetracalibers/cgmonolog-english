@@ -115,6 +115,10 @@ export class LocalSpeaker {
     return this.#status === "playing"
   }
 
+  get isPaused() {
+    return this.#status === "paused"
+  }
+
   get isRepeatON() {
     return this.#repeat
   }
@@ -128,25 +132,29 @@ export class LocalSpeaker {
     this.#audio.text = text
     this.#queued = true
     this.#status = "playing"
+
+    this.#audio.onstart = () => (this.#status = "playing")
+    this.#audio.onend = () => {
+      this.#status = "idle"
+      if (this.isRepeatON) {
+        this.speak(text)
+      }
+    }
+    this.#audio.onpause = () => (this.#status = "paused")
+    this.#audio.onresume = () => (this.#status = "playing")
+
     window.speechSynthesis.speak(this.#audio)
   }
 
   stop() {
-    this.#status = "idle"
     window.speechSynthesis.cancel()
   }
 
   pause() {
-    this.#status = "paused"
     window.speechSynthesis.pause()
   }
 
-  resume(text: string) {
-    if (!this.#queued) {
-      this.speak(text)
-      return
-    }
-    this.#status = "playing"
+  resume() {
     window.speechSynthesis.resume()
   }
 

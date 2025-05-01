@@ -14,8 +14,10 @@
   const togglePlay = () => {
     if (speaker.isSpeaking) {
       speaker.pause()
+    } else if (speaker.isPaused) {
+      speaker.resume()
     } else {
-      speaker.resume(text)
+      speaker.speak(text)
     }
   }
 
