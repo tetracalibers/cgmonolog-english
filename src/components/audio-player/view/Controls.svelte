@@ -13,6 +13,7 @@
 
   let status = $derived(speaker.status)
   let repeat = $derived(speaker.isRepeat)
+  let rate = $derived(speaker.rate)
 
   const togglePlay = () => {
     if ($status === "playing") {
@@ -28,12 +29,11 @@
     repeat.update((prev) => !prev)
   }
 
-  const PLAYBACK_SPEEDS = [1, 0.8, 0.75, 0.5]
+  const PLAYBACK_SPEEDS = [1, 0.8, 0.75, 0.5, 0.25]
   let speedIndex = $state(0)
   const changeSpeed = () => {
     speaker.rate = PLAYBACK_SPEEDS[++speedIndex % PLAYBACK_SPEEDS.length]
   }
-  let currentSpeed = $derived(PLAYBACK_SPEEDS[speedIndex])
 </script>
 
 <div class="controls">
@@ -50,7 +50,7 @@
   </button>
 
   <button class="speed-button" onclick={changeSpeed}>
-    <span class="speed-label">{currentSpeed}x</span>
+    <span class="speed-label">{$rate}x</span>
   </button>
 </div>
 

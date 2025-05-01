@@ -84,6 +84,7 @@ export class SpeakerContext {
 export class LocalSpeaker {
   #ctx!: SpeakerContext
   #audio!: SpeechSynthesisUtterance
+  #rate: Writable<number> = writable(1.0)
   #repeat: Writable<boolean> = writable(false)
   #status: Writable<"idle" | "playing" | "paused"> = writable("idle")
 
@@ -118,7 +119,12 @@ export class LocalSpeaker {
     return this.#repeat
   }
 
+  get rate(): Writable<number> {
+    return this.#rate
+  }
+
   set rate(rate: number) {
+    this.#rate.set(rate)
     this.#audio.rate = rate
   }
 
