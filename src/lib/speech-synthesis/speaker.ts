@@ -118,12 +118,16 @@ export class LocalSpeaker {
     return this.#status === "paused"
   }
 
-  get isRepeatON() {
+  get isRepeat() {
     return this.#repeat
   }
 
   set rate(rate: number) {
     this.#audio.rate = rate
+  }
+
+  set repeat(flag: boolean) {
+    this.#repeat = flag
   }
 
   speak(text: string) {
@@ -134,7 +138,7 @@ export class LocalSpeaker {
     this.#audio.onstart = () => (this.#status = "playing")
     this.#audio.onend = () => {
       this.#status = "idle"
-      if (this.isRepeatON) {
+      if (this.isRepeat) {
         this.speak(text)
       }
     }
@@ -154,26 +158,5 @@ export class LocalSpeaker {
 
   resume() {
     window.speechSynthesis.resume()
-  }
-
-  repeatON() {
-    if (this.#repeat) return
-    this.#repeat = true
-    this.#audio.onend = () => {
-      this.speak(this.#audio.text)
-    }
-  }
-
-  repeatOFF() {
-    this.#repeat = false
-    this.#audio.onend = null
-  }
-
-  toggleRepeat() {
-    if (this.#repeat) {
-      this.repeatOFF()
-    } else {
-      this.repeatON()
-    }
   }
 }

@@ -21,6 +21,10 @@
     }
   }
 
+  const toggleRepeat = () => {
+    speaker.repeat = !speaker.isRepeat
+  }
+
   const PLAYBACK_SPEEDS = [1, 0.8, 0.75, 0.5]
   let speedIndex = $state(0)
   const changeSpeed = () => {
@@ -30,7 +34,7 @@
 </script>
 
 <div class="controls">
-  <button class="repeat-button" onclick={() => speaker.toggleRepeat()} class:--repeat={speaker.isRepeatON}>
+  <button class="repeat-button" onclick={() => toggleRepeat()} class:--repeat={speaker.isRepeat}>
     <RepeatIcon width="1.2em" height="1.2em" />
   </button>
 
