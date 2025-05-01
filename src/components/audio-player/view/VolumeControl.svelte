@@ -16,7 +16,7 @@
   })
 </script>
 
-<div class="volume flex justify-center relative">
+<div class="volume">
   <button onclick={() => toggle(muted)}>
     {#if $muted}
       <VolumeMute />
@@ -25,17 +25,41 @@
     {/if}
   </button>
 
-  <div class="volume-control w-16 origin-left -rotate-90 absolute -top-1 left-[50%]">
+  <div class="volume-control">
     <RangeSlider bind:value={volumePercentage} max={100} step={1} />
   </div>
 </div>
 
-<style lang="postcss">
+<style>
+  button {
+    appearance: none;
+    background: none;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+  }
+
+  .volume {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
   .volume-control {
-    @apply opacity-0 transition-opacity;
+    opacity: 0;
+    transition-property: opacity;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    position: absolute;
+    top: -0.25rem;
+    left: 50%;
+    width: 4rem;
+    transform-origin: left;
+    transform: rotate(-90deg);
   }
 
   .volume:hover .volume-control {
-    @apply opacity-100;
+    opacity: 1;
   }
 </style>

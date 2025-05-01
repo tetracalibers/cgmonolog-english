@@ -37,24 +37,16 @@ const { piece, next, prev, progress } = Astro.props
     </div>
     <div class="items-container">
       {
-        piece.data.examples.map((example) => (
+        piece.data.examples.map((example, i) => (
           <div class="item">
             <div class="item-lang">
-              <div class="--en">{example.en}</div>
-              <div class="--ja">{example.ja}</div>
-            </div>
-            <div class="item-main">
-              {example.en.split("\n").map((en, i) => (
-                <div class="item-main-inner">
-                  <div class="item-sentence">
-                    <div class="--en">{en}</div>
-                    <div class="item-phonetic">{example.ipa.split("\n")[i]}</div>
-                  </div>
-                  <div class="player-wrapper">
-                    <AudioPlayer src={`/assets/audio${example.audio[i]}`} client:only="svelte" />
-                  </div>
-                </div>
-              ))}
+              <div class="item-sentence">
+                <div class="--en">{example.en}</div>
+                <div class="--ja">{example.ja}</div>
+              </div>
+              <div class="item-player">
+                <AudioPlayer src={`/assets/audio${example.audio[i]}`} client:only="svelte" />
+              </div>
             </div>
           </div>
         ))
@@ -105,12 +97,22 @@ const { piece, next, prev, progress } = Astro.props
     padding: 1.5rem;
   }
   .item-lang {
-    display: grid;
-    gap: 0.5rem;
-    border: 1px solid var(--slate-500);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid var(--slate-300);
     border-inline-start-width: 0;
     border-inline-end-width: 0;
-    padding: 2rem;
+    padding: 1rem;
+  }
+  .item-sentence {
+    flex-basis: calc(32rem - 100%);
+    flex-grow: 1;
+  }
+  .item-player {
+    margin-inline-start: auto;
   }
 
   .item-main {
@@ -128,7 +130,6 @@ const { piece, next, prev, progress } = Astro.props
   }
   .item-sentence {
     display: grid;
-    align-content: center;
     gap: 0.5rem;
   }
   .item-phonetic {

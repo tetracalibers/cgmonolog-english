@@ -2,18 +2,13 @@
   import PauseIcon from "~icons/carbon/pause-filled"
   import PlayIcon from "~icons/carbon/play-filled-alt"
   import RepeatIcon from "~icons/carbon/repeat"
-  import SkipBackIcon from "~icons/carbon/skip-back"
-  import SkipForwardIcon from "~icons/carbon/skip-forward"
 
   import { getAudioContext } from "../core/context"
-  import { toggle, toHHMMSS } from "../utils"
-
-  import RangeSlider from "./RangeSlider.svelte"
-  import VolumeControl from "./VolumeControl.svelte"
+  import { toggle } from "../utils"
 
   const PLAYBACK_SPEEDS = [1, 0.8, 0.75, 0.5]
 
-  const { playing, playbackRate, paused, repeat, seekBy, currentTime, duration } = getAudioContext()
+  const { playing, playbackRate, paused, repeat } = getAudioContext()
 
   let speedIndex = 0
 
@@ -22,48 +17,86 @@
   }
 </script>
 
-<div class="_card h-40 w-[290px] px-6 py-6 flex flex-col justify-center items-center rounded-lg text-slate-400">
-  <div class="flex items-center space-x-3">
-    <button onclick={() => toggle(repeat)}>
-      <RepeatIcon class={`${$repeat ? "text-purple-400" : "text-slate-300"}`} />
-    </button>
+<div class="controls">
+  <button class="repeat-button" onclick={() => toggle(repeat)} class:--repeat={$repeat}>
+    <RepeatIcon width="1.2em" height="1.2em" />
+  </button>
 
-    <button onclick={() => seekBy(-1 * $currentTime)}>
-      <SkipBackIcon />
-    </button>
-    <button
-      onclick={() => toggle(paused)}
-      class="_play-button w-12 h-12 rounded-full flex justify-center items-center text-white bg-gradient-to-br from-[#5583EE] to-[#41D8DD]"
-    >
-      {#if $playing}
-        <PauseIcon />
-      {:else}
-        <PlayIcon />
-      {/if}
-    </button>
+  <button onclick={() => toggle(paused)} class="play-button">
+    {#if $playing}
+      <PauseIcon />
+    {:else}
+      <PlayIcon />
+    {/if}
+  </button>
 
-    <button onclick={() => seekBy($duration - $currentTime)}>
-      <SkipForwardIcon />
-    </button>
-
-    <button
-      class="w-[4ch] h-5 flex items-center justify-center rounded-full border border-current"
-      onclick={handlePlaybackSpeedClick}
-    >
-      <span class="text-xs font-semibold">{$playbackRate}x</span>
-    </button>
-  </div>
-
-  <div class="mt-4 w-full flex items-center space-x-2">
-    <span class="text-sm">{toHHMMSS($currentTime)}</span>
-    <RangeSlider max={$duration} bind:value={$currentTime} />
-    <span class="text-sm">{toHHMMSS($duration)}</span>
-    <VolumeControl />
-  </div>
+  <button class="speed-button" onclick={handlePlaybackSpeedClick}>
+    <span class="speed-label">{$playbackRate}x</span>
+  </button>
 </div>
 
 <style>
-  ._card {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  button {
+    appearance: none;
+    background: none;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+  }
+
+  .controls {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+
+    gap: 0.5rem;
+    place-items: center;
+    color: #a1c4fd;
+  }
+
+  .play-button {
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+  }
+
+  .repeat-button {
+    display: grid;
+    place-items: center;
+    padding-block: 0.2rem;
+    border-radius: 9999px;
+    border: 1px solid currentColor;
+    width: 6ch;
+  }
+  .--repeat {
+    color: #d939cd;
+  }
+
+  .play-button {
+    display: flex;
+    height: 3rem;
+    width: 3rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background-image: linear-gradient(135deg, #f6ceec 10%, #d939cd 100%);
+    color: white;
+  }
+
+  .speed-button {
+    color: #d939cd;
+    display: flex;
+    padding-block: 0.2rem;
+    width: 6ch;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    border: 1px solid currentColor;
+    height: fit-content;
+  }
+  .speed-label {
+    font-size: 0.75rem;
+    line-height: 1rem;
   }
 </style>
