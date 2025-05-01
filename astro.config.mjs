@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from "astro/config"
 import svelte from "@astrojs/svelte"
+import Icons from "unplugin-icons/vite"
 
 import path, { dirname } from "node:path"
 import { fileURLToPath } from "node:url"
@@ -15,6 +16,11 @@ export default defineConfig({
       alias: {
         $: path.resolve(__dirname, "./src")
       }
-    }
+    },
+    plugins: [
+      Icons({
+        compiler: "svelte"
+      })
+    ]
   }
 })
