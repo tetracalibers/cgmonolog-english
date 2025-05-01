@@ -1,0 +1,127 @@
+---
+import BackIcon from "~icons/emojione-monotone/back-arrow"
+import NextIcon from "~icons/emojione-monotone/soon-arrow"
+import PuzzleIcon from "~icons/game-icons/puzzle"
+import { home } from "$/lib/slug"
+
+interface Props {
+  prev: string
+  next: string
+  progress: number
+  type?: string
+}
+
+const { prev, next, progress, type = "default" } = Astro.props
+---
+
+<div class="Header">
+  <a href={home()} class="heading-link">
+    <h1 class="heading">
+      English
+      <PuzzleIcon />
+      Pieces
+    </h1>
+  </a>
+  <div class="container">
+    <nav class="nav">
+      <a href={prev}>
+        <BackIcon />
+      </a>
+      <a href={next}>
+        <NextIcon />
+      </a>
+    </nav>
+    <div class="progress-wrapper">
+      <div class={`progress --${type}`}>
+        <span class="progress-label">{progress}%</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style define:vars={{ progress: `${progress}%` }}>
+  .Header {
+    color: var(--slate-400);
+    display: grid;
+    padding-block-end: 0.5rem;
+    padding-block-start: 2rem;
+  }
+  .heading-link {
+    color: inherit;
+    margin-inline: auto;
+    width: fit-content;
+  }
+  .heading {
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    font-style: italic;
+  }
+  .heading :global(svg) {
+    transform: rotate(12deg);
+    justify-self: center;
+    text-align: center;
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
+  .container {
+    display: grid;
+    gap: 1rem;
+  }
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    padding-inline: 0.5rem;
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+  .nav a {
+    color: inherit;
+  }
+  .nav :global(svg) {
+    display: flex;
+  }
+
+  .progress-wrapper {
+    background-color: var(--slate-200);
+  }
+  .progress {
+    width: var(--progress);
+    text-align: end;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: white;
+  }
+  .progress-label {
+    display: inline-block;
+    padding-inline: 0.25rem;
+  }
+
+  .--large {
+    background-color: var(--rose-400);
+  }
+  .--medium {
+    background-color: var(--green-400);
+  }
+  .--small {
+    background-color: var(--sky-400);
+  }
+  .--single {
+    background-color: var(--orange-400);
+  }
+  .--more {
+    background-color: var(--violet-400);
+  }
+  .--word {
+    background-color: var(--slate-300);
+  }
+  .--default {
+    background-color: var(--slate-400);
+  }
+</style>

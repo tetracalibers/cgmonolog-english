@@ -16,6 +16,8 @@
     "typescript": "^5.8.3"
   },
   "devDependencies": {
+    "@iconify-json/carbon": "^1.2.8",
+    "@iconify-json/emojione-monotone": "^1.2.1",
     "@iconify-json/game-icons": "^1.2.2",
     "prettier": "^3.5.3",
     "prettier-plugin-astro": "^0.14.1",

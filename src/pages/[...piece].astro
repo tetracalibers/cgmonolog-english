@@ -1,0 +1,169 @@
+---
+import AudioPlayer from "../components/audio-player/AudioPlayer.svelte"
+import HtmlDocument from "../layout/HtmlDocument.astro"
+import PuzzleIcon from "~icons/game-icons/jigsaw-piece"
+import Header from "../components/header/Header.astro"
+import { pager } from "$/lib/slug"
+import { getPieces } from "$/lib/collection"
+
+export async function getStaticPaths() {
+  const entries = await getPieces()
+  return entries.map((entry, i) => {
+    const { prev, next } = pager(entries, i)
+    return {
+      params: { piece: entry.id },
+      props: {
+        piece: entry,
+        next,
+        prev,
+        progress: Math.floor((i / (entries.length - 1)) * 100)
+      }
+    }
+  })
+}
+
+const { piece, next, prev, progress } = Astro.props
+---
+
+<HtmlDocument title={piece.data.shape}>
+  <Header prev={prev} next={next} progress={progress} type={piece.data.type} />
+  <div class="container">
+    <div class="heading-container">
+      <div class={`heading-icon --${piece.data.type}`}><PuzzleIcon /></div>
+      <h2 class="heading">
+        {piece.data.shape}
+      </h2>
+      {piece.data.meaning && <div class="meaning">{piece.data.meaning}</div>}
+    </div>
+    <div class="items-container">
+      {
+        piece.data.examples.map((example) => (
+          <div class="item">
+            <div class="item-lang">
+              <div class="--en">{example.en}</div>
+              <div class="--ja">{example.ja}</div>
+            </div>
+            <div class="item-main">
+              {example.en.split("\n").map((en, i) => (
+                <div class="item-main-inner">
+                  <div class="item-sentence">
+                    <div class="--en">{en}</div>
+                    <div class="item-phonetic">{example.ipa.split("\n")[i]}</div>
+                  </div>
+                  <div class="player-wrapper">
+                    <AudioPlayer src={`/assets/audio${example.audio[i]}`} client:only="svelte" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</HtmlDocument>
+
+<style>
+  .container {
+    display: grid;
+    gap: 2rem;
+    padding-block-end: 1rem;
+    padding-block-start: 3rem;
+  }
+
+  .heading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+  .heading-icon {
+    display: flex;
+  }
+  .heading {
+    font-weight: 400;
+    font-size: inherit;
+    margin: 0;
+    text-align: center;
+    text-wrap: balance;
+  }
+  .meaning {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    opacity: 0.9;
+  }
+
+  .items-container {
+    display: grid;
+    gap: 1rem;
+  }
+  .item {
+    display: grid;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+  .item-lang {
+    display: grid;
+    gap: 0.5rem;
+    border: 1px solid var(--slate-500);
+    border-inline-start-width: 0;
+    border-inline-end-width: 0;
+    padding: 2rem;
+  }
+
+  .item-main {
+    display: grid;
+    gap: 1rem;
+  }
+  .item-main-inner {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    column-gap: 1rem;
+    row-gap: 1.5rem;
+    border-radius: 0.125rem;
+    padding-inline: 1rem;
+    padding-block: 2rem;
+  }
+  .item-sentence {
+    display: grid;
+    align-content: center;
+    gap: 0.5rem;
+  }
+  .item-phonetic {
+    opacity: 0.7;
+  }
+
+  .player-wrapper {
+    width: fit-content;
+    justify-self: center;
+  }
+
+  .--en {
+    font-size: 1.2em;
+  }
+  .--ja {
+    font-weight: 300;
+    font-size: 0.9em;
+  }
+
+  .--large {
+    color: var(--rose-400);
+  }
+  .--medium {
+    color: var(--green-400);
+  }
+  .--small {
+    color: var(--sky-400);
+  }
+  .--single {
+    color: var(--orange-400);
+  }
+  .--more {
+    color: var(--violet-400);
+  }
+  .--word {
+    color: var(--slate-300);
+  }
+</style>

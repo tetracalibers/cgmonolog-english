@@ -255,6 +255,20 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.25.3.tgz#b17a2171f9074df9e91bfb07ef99a892ac06412a"
   integrity sha512-ICgUR+kPimx0vvRzf+N/7L7tVSQeE3BYY+NhHRHXS1kBuPO7z2+7ea2HbhDyZdTephgvNvKrlDDKUexuCVBVvg==
 
+"@iconify-json/carbon@^1.2.8":
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/@iconify-json/carbon/-/carbon-1.2.8.tgz#fe81b9729f0115448e25d737895d938b23326531"
+  integrity sha512-6xh4YiFBz6qoSnB3XMe23WvjTJroDFXB17J1MbiT7nATFe+70+em1acRXr8hgP/gYpwFMHFc4IvjA/IPTPnTzg==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify-json/emojione-monotone@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@iconify-json/emojione-monotone/-/emojione-monotone-1.2.1.tgz#582e2f010e713c4383bd44d25070b17684a479ac"
+  integrity sha512-cZSNcPsuiAD6HCzCh/2dYKGh3pNI0jJlxBxQWfC33cQsPtqYZqulGBvlkThXYNvDl8VxgVHT9u+izyX/yeEIkA==
+  dependencies:
+    "@iconify/types" "*"
+
 "@iconify-json/game-icons@^1.2.2":
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@iconify-json/game-icons/-/game-icons-1.2.2.tgz#c056daa213a21932bea91d09b115eccff748aeeb"
