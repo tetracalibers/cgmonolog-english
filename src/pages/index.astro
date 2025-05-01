@@ -1,16 +1,137 @@
 ---
+import HtmlDocument from "$/layout/HtmlDocument.astro"
+import PuzzleIcon from "~icons/game-icons/jigsaw-piece"
+import { getPieces, getScenes } from "$/lib/collection"
+import { home } from "$/lib/slug"
 
+const pieces = await getPieces()
+const scenes = await getScenes()
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-  </head>
-  <body>
-    <h1>Astro</h1>
-  </body>
-</html>
+<HtmlDocument title="All Pieces">
+  <h1 class="PieceTitle">English Pieces</h1>
+  <ul class="PieceList">
+    {
+      pieces.map((piece) => (
+        <li>
+          <a href={`${home()}${piece.id}`} class={`--${piece.data.type} PieceLink`}>
+            <PuzzleIcon />
+            <span class="PieceLink-text">{piece.data.shape}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <h2 class="SceneTitle">Scene</h2>
+  <ul class="SceneList">
+    {
+      scenes.map((scene) => (
+        <li>
+          <a href={`${home()}${scene.id}`} class={"SceneLink"}>
+            <PuzzleIcon />
+            <span class="SceneLink-text">{scene.data.title}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</HtmlDocument>
+
+<style>
+  .PieceTitle {
+    padding-inline: 1rem;
+    padding-block: 2rem;
+    margin: 0;
+    text-align: center;
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: 400;
+  }
+  .PieceList {
+    list-style: none;
+    margin-block: 0;
+    margin-inline: auto;
+    display: flex;
+    width: fit-content;
+    flex-wrap: wrap;
+    column-gap: 2rem;
+    row-gap: 1rem;
+    padding-inline: 2rem;
+    padding-block: 1rem;
+  }
+  .PieceLink {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    text-decoration-line: underline;
+    text-decoration-style: dashed;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+  .PieceLink :global(svg) {
+    flex-shrink: 0;
+  }
+  .PieceLink-text {
+    color: var(--slate-500);
+    text-wrap: balance;
+  }
+
+  .SceneTitle {
+    margin: 0;
+    padding-inline: 1rem;
+    padding-block: 2rem;
+    text-align: center;
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: 400;
+  }
+  .SceneList {
+    list-style: none;
+    margin-inline: auto;
+    margin-block: 0;
+    display: flex;
+    width: fit-content;
+    flex-wrap: wrap;
+    column-gap: 2rem;
+    row-gap: 1rem;
+    padding-inline: 2rem;
+    padding-block-end: 4rem;
+    padding-block-start: 1rem;
+  }
+  .SceneLink {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    color: var(--slate-500);
+  }
+  .SceneLink :global(svg) {
+    flex-shrink: 0;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  .--large {
+    color: var(--rose-400);
+  }
+  .--medium {
+    color: var(--green-400);
+  }
+  .--small {
+    color: var(--sky-400);
+  }
+  .--single {
+    color: var(--orange-400);
+  }
+  .--more {
+    color: var(--violet-400);
+  }
+  .--word {
+    color: var(--slate-300);
+  }
+</style>
