@@ -1,14 +1,19 @@
 <script lang="ts">
-  import HeadlessAudioPlayer from "./core/HeadlessAudioPlayer.svelte"
+  import { LocalSpeaker, type SpeakerContext } from "$/lib/speech-synthesis/speaker"
   import Controls from "./view/Controls.svelte"
+  import { onMount } from "svelte"
 
   interface Props {
-    src: string
+    text: string
+    speakerCtx: SpeakerContext
   }
 
-  let { src }: Props = $props()
+  let { text, speakerCtx }: Props = $props()
+  let speaker = $state<LocalSpeaker | null>(null)
+
+  onMount(() => {
+    speaker = new LocalSpeaker(speakerCtx)
+  })
 </script>
 
-<HeadlessAudioPlayer src={src}>
-  <Controls />
-</HeadlessAudioPlayer>
+<Controls text={text} speaker={speaker} />

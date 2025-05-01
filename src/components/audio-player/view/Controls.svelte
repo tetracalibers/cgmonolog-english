@@ -2,36 +2,43 @@
   import PauseIcon from "~icons/carbon/pause-filled"
   import PlayIcon from "~icons/carbon/play-filled-alt"
   import RepeatIcon from "~icons/carbon/repeat"
+  import { onMount } from "svelte"
+  import { LocalSpeaker, SpeakerContext } from "$/lib/speech-synthesis/speaker"
 
-  import { getAudioContext } from "../core/context"
-  import { toggle } from "../utils"
+  export let text: string
+  export let speaker: LocalSpeaker
+
+  const togglePlay = () => {
+    if (speaker.isSpeaking) {
+      speaker.pause()
+    } else {
+      speaker.resume(text)
+    }
+  }
 
   const PLAYBACK_SPEEDS = [1, 0.8, 0.75, 0.5]
-
-  const { playing, playbackRate, paused, repeat } = getAudioContext()
-
   let speedIndex = 0
-
-  const handlePlaybackSpeedClick = () => {
-    $playbackRate = PLAYBACK_SPEEDS[++speedIndex % PLAYBACK_SPEEDS.length]
+  const changeSpeed = () => {
+    speaker.rate = PLAYBACK_SPEEDS[++speedIndex % PLAYBACK_SPEEDS.length]
   }
+  $: currentSpeed = PLAYBACK_SPEEDS[speedIndex]
 </script>
 
 <div class="controls">
-  <button class="repeat-button" onclick={() => toggle(repeat)} class:--repeat={$repeat}>
+  <button class="repeat-button" onclick={() => speaker.toggleRepeat()} class:--repeat={speaker.isRepeatON}>
     <RepeatIcon width="1.2em" height="1.2em" />
   </button>
 
-  <button onclick={() => toggle(paused)} class="play-button">
-    {#if $playing}
+  <button onclick={togglePlay} class="play-button">
+    {#if speaker.isSpeaking}
       <PauseIcon />
     {:else}
       <PlayIcon />
     {/if}
   </button>
 
-  <button class="speed-button" onclick={handlePlaybackSpeedClick}>
-    <span class="speed-label">{$playbackRate}x</span>
+  <button class="speed-button" onclick={changeSpeed}>
+    <span class="speed-label">{currentSpeed}x</span>
   </button>
 </div>
 

@@ -3,6 +3,7 @@ import AudioPlayer from "../components/audio-player/AudioPlayer.svelte"
 import HtmlDocument from "../layout/HtmlDocument.astro"
 import PuzzleIcon from "~icons/game-icons/jigsaw-piece"
 import Header from "../components/header/Header.astro"
+import SpeakerProvider from "$/components/audio-player/SpeakerProvider.svelte"
 import { pager } from "$/lib/slug"
 import { getPieces } from "$/lib/collection"
 
@@ -35,23 +36,25 @@ const { piece, next, prev, progress } = Astro.props
       </h2>
       {piece.data.meaning && <div class="meaning">{piece.data.meaning}</div>}
     </div>
-    <div class="items-container">
-      {
-        piece.data.examples.map((example, i) => (
-          <div class="item">
-            <div class="item-lang">
-              <div class="item-sentence">
-                <div class="--en">{example.en}</div>
-                <div class="--ja">{example.ja}</div>
-              </div>
-              <div class="item-player">
-                <AudioPlayer src={`/assets/audio${example.audio[i]}`} client:only="svelte" />
+    <SpeakerProvider client:only="svelte">
+      <div class="items-container">
+        {
+          piece.data.examples.map((example, i) => (
+            <div class="item">
+              <div class="item-lang">
+                <div class="item-sentence">
+                  <div class="--en">{example.en}</div>
+                  <div class="--ja">{example.ja}</div>
+                </div>
+                <div class="item-player">
+                  <AudioPlayer text={example.en} client:only="svelte" />
+                </div>
               </div>
             </div>
-          </div>
-        ))
-      }
-    </div>
+          ))
+        }
+      </div>
+    </SpeakerProvider>
   </div>
 </HtmlDocument>
 
@@ -102,9 +105,9 @@ const { piece, next, prev, progress } = Astro.props
     gap: 1rem;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid var(--slate-300);
+    /* border: 1px solid var(--slate-300);
     border-inline-start-width: 0;
-    border-inline-end-width: 0;
+    border-inline-end-width: 0; */
     padding: 1rem;
   }
   .item-sentence {
