@@ -12,6 +12,7 @@
   let { text, speaker }: Props = $props()
 
   let status = $derived(speaker.status)
+  let repeat = $derived(speaker.isRepeat)
 
   const togglePlay = () => {
     if ($status === "playing") {
@@ -24,7 +25,7 @@
   }
 
   const toggleRepeat = () => {
-    speaker.repeat = !speaker.isRepeat
+    repeat.update((prev) => !prev)
   }
 
   const PLAYBACK_SPEEDS = [1, 0.8, 0.75, 0.5]
@@ -36,7 +37,7 @@
 </script>
 
 <div class="controls">
-  <button class="repeat-button" onclick={() => toggleRepeat()} class:--repeat={speaker.isRepeat}>
+  <button class="repeat-button" onclick={() => toggleRepeat()} class:--repeat={$repeat}>
     <RepeatIcon width="1.2em" height="1.2em" />
   </button>
 

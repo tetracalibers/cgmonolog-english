@@ -84,7 +84,7 @@ export class SpeakerContext {
 export class LocalSpeaker {
   #ctx!: SpeakerContext
   #audio!: SpeechSynthesisUtterance
-  #repeat: boolean = false
+  #repeat: Writable<boolean> = writable(false)
   #status: Writable<"idle" | "playing" | "paused"> = writable("idle")
 
   init = async (ctx: SpeakerContext, option: SpeakerOption = defaultSpeakerOption) => {
@@ -122,8 +122,8 @@ export class LocalSpeaker {
     this.#audio.rate = rate
   }
 
-  set repeat(flag: boolean) {
-    this.#repeat = flag
+  set repeat(on: boolean) {
+    this.#repeat.set(on)
   }
 
   speak(text: string) {
@@ -134,9 +134,12 @@ export class LocalSpeaker {
     this.#audio.onstart = () => this.#status.set("playing")
     this.#audio.onend = () => {
       this.#status.set("idle")
-      if (this.isRepeat) {
-        this.speak(text)
-      }
+      const unsubscribe = this.#repeat.subscribe((on) => {
+        if (on) {
+          this.speak(text)
+        }
+      })
+      unsubscribe()
     }
     this.#audio.onpause = () => this.#status.set("paused")
     this.#audio.onresume = () => this.#status.set("playing")
