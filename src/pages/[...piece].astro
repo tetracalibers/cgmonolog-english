@@ -5,6 +5,7 @@ import PuzzleIcon from "~icons/game-icons/jigsaw-piece"
 import EducationIcon from "~icons/material-symbols-light/history-edu"
 import Header from "../components/header/Header.astro"
 import SpeakerProvider from "$/components/audio-player/SpeakerProvider.svelte"
+import WithAnkiMode from "$/components/WithAnkiMode.svelte"
 import { pager } from "$/lib/slug"
 import { getPieces } from "$/lib/collection"
 import { render } from "astro:content"
@@ -43,28 +44,30 @@ const { Content } = await render(piece)
       <EducationIcon />
       <Content />
     </div>
-    <SpeakerProvider client:only="svelte">
-      <div class="items-container">
-        {
-          piece.data.examples.map((example, i) => (
-            <div class="item">
-              <div class="item-lang">
-                <div class="item-sentence">
-                  {example.scene && <div class="item-scene">{example.scene}</div>}
-                  <div class="item-main">
-                    <div class="--en">{example.en}</div>
-                    <div class="--ja">{example.ja}</div>
+    <WithAnkiMode client:load>
+      <SpeakerProvider client:only="svelte">
+        <div class="items-container">
+          {
+            piece.data.examples.map((example, i) => (
+              <div class="item">
+                <div class="item-lang">
+                  <div class="item-sentence">
+                    {example.scene && <div class="item-scene">{example.scene}</div>}
+                    <div class="item-main">
+                      <div class="--en">{example.en}</div>
+                      <div class="--ja">{example.ja}</div>
+                    </div>
+                  </div>
+                  <div class="item-player">
+                    <AudioPlayer text={example.en} client:only="svelte" />
                   </div>
                 </div>
-                <div class="item-player">
-                  <AudioPlayer text={example.en} client:only="svelte" />
-                </div>
               </div>
-            </div>
-          ))
-        }
-      </div>
-    </SpeakerProvider>
+            ))
+          }
+        </div>
+      </SpeakerProvider>
+    </WithAnkiMode>
   </div>
 </HtmlDocument>
 
@@ -173,6 +176,10 @@ const { Content } = await render(piece)
   .--ja {
     font-weight: 300;
     font-size: 0.9em;
+  }
+  :global([data-anki-mode="true"]) .--ja {
+    background-color: #ff8dc7;
+    color: #ff8dc7;
   }
 
   .--large {
