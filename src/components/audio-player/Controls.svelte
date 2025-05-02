@@ -90,6 +90,7 @@
     border-radius: 9999px;
     border: 1px solid currentColor;
     width: 6ch;
+    height: 100%;
   }
   .--repeat {
     color: #d939cd;
