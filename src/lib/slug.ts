@@ -10,8 +10,8 @@ export const pager = (entries: CollectionEntry<"piece" | "scene">[], currIdx: nu
   const prevEntry = entries[currIdx - 1]
   const nextEntry = entries[currIdx + 1]
 
-  const prevSlug = prevEntry ? prevEntry.slug : null
-  const nextSlug = nextEntry ? nextEntry.slug : null
+  const prevSlug = prevEntry ? prevEntry.id : null
+  const nextSlug = nextEntry ? nextEntry.id : null
 
   const base = home()
 
