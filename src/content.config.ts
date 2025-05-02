@@ -8,13 +8,12 @@ const piece = defineCollection({
     meaning: z.string().optional(), // 意味
     type: z.enum(["large", "medium", "small", "single", "more", "word"]), // どのピースとして使われるか
     index: z.coerce.number().int(), // 順序決定に使われる、章番号など
+    cite: z.string().optional(), // 出典
     examples: z
       .object({
         en: z.string(), // 英語フレーズ
-        ja: z.string().optional(), // 日本語訳
-        ipa: z.string().optional(), // 発音記号
-        audio: z.string().array().optional(), // 英文読み上げ音声ファイルへのパス
-        source: z.string().optional() // 出典
+        ja: z.string(), // 日本語訳
+        scene: z.string().optional() // どういう状況か
       })
       .array()
   })
