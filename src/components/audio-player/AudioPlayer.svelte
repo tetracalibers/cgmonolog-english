@@ -1,6 +1,6 @@
 <script lang="ts">
   import { LocalSpeaker } from "$/lib/speech-synthesis/speaker"
-  import Controls from "./view/Controls.svelte"
+  import Controls from "./Controls.svelte"
   import { speakerCtx } from "$/lib/speech-synthesis/use-speaker"
 
   interface Props {
