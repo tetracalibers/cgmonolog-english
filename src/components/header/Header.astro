@@ -1,7 +1,6 @@
 ---
 import BackIcon from "~icons/emojione-monotone/back-arrow"
 import NextIcon from "~icons/emojione-monotone/soon-arrow"
-import PuzzleIcon from "~icons/game-icons/puzzle"
 
 interface Props {
   prev: string
@@ -15,11 +14,7 @@ const { prev, next, progress, type = "default" } = Astro.props
 
 <div class="Header">
   <a href="/" class="heading-link">
-    <h1 class="heading">
-      English
-      <PuzzleIcon />
-      Pieces
-    </h1>
+    <h1 class="heading">cgmonolog-english</h1>
   </a>
   <div class="container">
     <nav class="nav">
@@ -48,10 +43,16 @@ const { prev, next, progress, type = "default" } = Astro.props
     background-color: white;
     z-index: 10;
   }
+  :is(.heading-link, .container) {
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+  }
   .heading-link {
     color: inherit;
     margin-inline: auto;
     width: fit-content;
+    height: fit-content;
+    z-index: 2;
   }
   .heading {
     margin: 0;
