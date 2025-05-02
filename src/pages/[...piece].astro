@@ -2,10 +2,12 @@
 import AudioPlayer from "../components/audio-player/AudioPlayer.svelte"
 import HtmlDocument from "../layout/HtmlDocument.astro"
 import PuzzleIcon from "~icons/game-icons/jigsaw-piece"
+import EducationIcon from "~icons/material-symbols-light/history-edu"
 import Header from "../components/header/Header.astro"
 import SpeakerProvider from "$/components/audio-player/SpeakerProvider.svelte"
 import { pager } from "$/lib/slug"
 import { getPieces } from "$/lib/collection"
+import { render } from "astro:content"
 
 export async function getStaticPaths() {
   const entries = await getPieces()
@@ -24,6 +26,7 @@ export async function getStaticPaths() {
 }
 
 const { piece, next, prev, progress } = Astro.props
+const { Content } = await render(piece)
 ---
 
 <HtmlDocument title={piece.data.shape}>
@@ -35,6 +38,10 @@ const { piece, next, prev, progress } = Astro.props
         {piece.data.shape}
       </h2>
       {piece.data.meaning && <div class="meaning">{piece.data.meaning}</div>}
+    </div>
+    <div class="content-wrapper">
+      <EducationIcon />
+      <Content />
     </div>
     <SpeakerProvider client:only="svelte">
       <div class="items-container">
