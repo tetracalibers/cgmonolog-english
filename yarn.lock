@@ -276,6 +276,13 @@
   dependencies:
     "@iconify/types" "*"
 
+"@iconify-json/material-symbols-light@^1.2.20":
+  version "1.2.20"
+  resolved "https://registry.yarnpkg.com/@iconify-json/material-symbols-light/-/material-symbols-light-1.2.20.tgz#b6c4b7175999fce8316550782018026b2d662d28"
+  integrity sha512-xGPhQR80cNLAXRKAlbHQJednqaimVBqQGTz3WZUlStzIaUhrbVpFscyQT/taAe0X9+Ra6XlhsIN+MPG8HDJCeA==
+  dependencies:
+    "@iconify/types" "*"
+
 "@iconify/types@*", "@iconify/types@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@iconify/types/-/types-2.0.0.tgz#ab0e9ea681d6c8a1214f30cd741fe3a20cc57f57"
