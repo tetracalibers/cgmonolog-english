@@ -123,6 +123,9 @@ const { Content } = await render(piece)
   .content-wrapper :global(:is(p, ul)) {
     margin: 0;
   }
+  .content-wrapper :global(ul) {
+    padding-inline-start: 1.25rem;
+  }
 
   .items-container {
     display: grid;
