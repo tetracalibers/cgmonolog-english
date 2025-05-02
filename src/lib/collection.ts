@@ -4,8 +4,3 @@ export const getPieces = async () => {
   const entries = await getCollection("piece")
   return entries.sort((a, b) => a.data.index - b.data.index)
 }
-
-export const getScenes = async () => {
-  const entries = await getCollection("scene")
-  return entries.sort((a, b) => a.data.index - b.data.index)
-}
