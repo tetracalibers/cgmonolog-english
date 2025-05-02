@@ -79,6 +79,9 @@
     grid-column: 1 / -1;
     grid-row: 1 / -1;
   }
+  .play-button :global(svg) {
+    flex-shrink: 0;
+  }
 
   .repeat-button {
     display: grid;
