@@ -40,10 +40,6 @@ const { Content } = await render(piece)
       </h2>
       {piece.data.meaning && <div class="meaning">{piece.data.meaning}</div>}
     </div>
-    <div class="content-wrapper">
-      <EducationIcon />
-      <Content />
-    </div>
     <WithAnkiMode client:load>
       <SpeakerProvider client:only="svelte">
         <div class="items-container">
@@ -68,6 +64,10 @@ const { Content } = await render(piece)
         </div>
       </SpeakerProvider>
     </WithAnkiMode>
+    <div class="content-wrapper">
+      <EducationIcon />
+      <Content />
+    </div>
   </div>
 </HtmlDocument>
 
@@ -108,9 +108,10 @@ const { Content } = await render(piece)
     gap: 1rem;
     padding: 1.5rem;
     margin-inline: 1.5rem;
-    line-height: 1.7;
+    line-height: 2;
     border: 2px double var(--slate-400);
     position: relative;
+    font-size: 0.9em;
   }
   .content-wrapper :global(svg) {
     position: absolute;
