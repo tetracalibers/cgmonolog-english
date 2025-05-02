@@ -2,7 +2,6 @@
 import HtmlDocument from "$/layout/HtmlDocument.astro"
 import PuzzleIcon from "~icons/game-icons/jigsaw-piece"
 import { getPieces } from "$/lib/collection"
-import { home } from "$/lib/slug"
 
 const pieces = await getPieces()
 ---
@@ -13,7 +12,7 @@ const pieces = await getPieces()
     {
       pieces.map((piece) => (
         <li>
-          <a href={`${home()}${piece.id}`} class={`--${piece.data.type} PieceLink`}>
+          <a href={`/${piece.id}`} class={`--${piece.data.type} PieceLink`}>
             <PuzzleIcon />
             <span class="PieceLink-text">{piece.data.shape}</span>
           </a>

@@ -1,22 +1,11 @@
 import type { CollectionEntry } from "astro:content"
 
-export const home = () => {
-  const origin = import.meta.env.DEV ? "http://localhost:4321" : import.meta.env.SITE
-  const base = origin + import.meta.env.BASE_URL
-  return base
-}
-
-export const pager = (entries: CollectionEntry<"piece" | "scene">[], currIdx: number) => {
+export const pager = (entries: CollectionEntry<"piece">[], currIdx: number) => {
   const prevEntry = entries[currIdx - 1]
   const nextEntry = entries[currIdx + 1]
 
-  const prevSlug = prevEntry ? prevEntry.id : null
-  const nextSlug = nextEntry ? nextEntry.id : null
-
-  const base = home()
-
-  const prev = prevSlug ? base + prevSlug : base
-  const next = nextSlug ? base + nextSlug : base
+  const prev = prevEntry ? "/" + prevEntry.id : "/"
+  const next = nextEntry ? "/" + nextEntry.id : "/"
 
   return { prev, next }
 }
