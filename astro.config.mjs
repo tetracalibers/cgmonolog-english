@@ -11,6 +11,9 @@ const __dirname = dirname(__filename)
 // https://astro.build/config
 export default defineConfig({
   site: "https://cgmonolog-english.pages.dev/",
+  devToolbar: {
+    enabled: false
+  },
   integrations: [svelte()],
   vite: {
     resolve: {
