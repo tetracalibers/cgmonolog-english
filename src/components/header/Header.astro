@@ -42,8 +42,11 @@ const { prev, next, progress, type = "default" } = Astro.props
   .Header {
     color: var(--slate-400);
     display: grid;
-    padding-block-end: 0.5rem;
     padding-block-start: 2rem;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 10;
   }
   .heading-link {
     color: inherit;
