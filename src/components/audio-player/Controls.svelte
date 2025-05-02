@@ -81,6 +81,8 @@
   }
   .play-button :global(svg) {
     flex-shrink: 0;
+    width: 1.5em;
+    height: 1.5em;
   }
 
   .repeat-button {
