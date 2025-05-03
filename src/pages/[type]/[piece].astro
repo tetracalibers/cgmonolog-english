@@ -62,7 +62,7 @@ const { Content } = await render(piece)
     <SpeakerProvider client:only="svelte">
       <div class="items-container">
         {
-          piece.data.examples.map((example, i) => (
+          piece.data.examples.map((example) => (
             <div class="item">
               <div class="item-lang">
                 <div class="item-sentence">
