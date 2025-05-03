@@ -94,7 +94,7 @@ const { Content } = await render(piece)
 <style>
   .container {
     display: grid;
-    gap: 2rem;
+    gap: 3rem;
     padding-block: 3rem;
   }
 
@@ -128,6 +128,7 @@ const { Content } = await render(piece)
     gap: 1rem;
     padding: 1.5rem;
     margin-inline: 1.5rem;
+    margin-block-start: 1.5rem;
     line-height: 2;
     border: 2px double var(--slate-400);
     position: relative;
@@ -150,12 +151,12 @@ const { Content } = await render(piece)
 
   .items-container {
     display: grid;
-    gap: 1rem;
+    gap: 3rem;
   }
   .item {
     display: grid;
     gap: 1rem;
-    padding: 1.5rem;
+    padding-inline: 1.5rem;
   }
   .item-lang {
     display: flex;
