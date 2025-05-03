@@ -43,17 +43,18 @@ export async function getStaticPaths() {
   })
 }
 
+const { type } = Astro.params
 const { piece, next, prev, progress } = Astro.props
 const { Content } = await render(piece)
 ---
 
 <HtmlDocument title={piece.data.shape}>
-  <Header prev={prev} next={next} progress={progress} type={piece.data.type}>
+  <Header prev={prev} next={next} progress={progress} type={type}>
     <SwitchAnkiMode client:load />
   </Header>
   <div class="container">
     <div class="heading-container">
-      <div class={`heading-icon --${piece.data.type}`}><PuzzleIcon /></div>
+      <div class={`heading-icon --${type}`}><PuzzleIcon /></div>
       <h2 class="heading">
         {piece.data.shape}
       </h2>
@@ -87,7 +88,7 @@ const { Content } = await render(piece)
       <EducationIcon />
       <Content />
     </div>
-    <a href="/" class="home-link">トップに戻る</a>
+    <a href={`/${type}`} class="back-link">一覧に戻る</a>
   </div>
 </HtmlDocument>
 
@@ -203,7 +204,7 @@ const { Content } = await render(piece)
     color: #ff8dc7;
   }
 
-  .home-link {
+  .back-link {
     line-height: 1.7;
     font-size: 0.95rem;
     color: var(--slate-500);
