@@ -1,28 +1,44 @@
 ---
-import AudioPlayer from "../components/audio-player/AudioPlayer.svelte"
-import HtmlDocument from "../layout/HtmlDocument.astro"
+import AudioPlayer from "$/components/audio-player/AudioPlayer.svelte"
+import HtmlDocument from "$/layout/HtmlDocument.astro"
 import PuzzleIcon from "~icons/game-icons/jigsaw-piece"
 import EducationIcon from "~icons/material-symbols-light/history-edu"
-import Header from "../components/header/Header.astro"
+import Header from "$/components/header/Header.astro"
 import SpeakerProvider from "$/components/audio-player/SpeakerProvider.svelte"
 import WithAnkiMode from "$/components/WithAnkiMode.svelte"
 import { pager } from "$/lib/slug"
-import { getPieces } from "$/lib/collection"
-import { render } from "astro:content"
+import { getCollection, render } from "astro:content"
 
 export async function getStaticPaths() {
-  const entries = await getPieces()
-  return entries.map((entry, i) => {
-    const { prev, next } = pager(entries, i)
-    return {
-      params: { piece: entry.id },
-      props: {
-        piece: entry,
-        next,
-        prev,
-        progress: Math.floor((i / (entries.length - 1)) * 100)
+  const compare = (a: { data: { index: number } }, b: { data: { index: number } }) => a.data.index - b.data.index
+
+  const mediumItems = (await getCollection("piece", ({ data }) => data.type === "medium")).sort(compare)
+  const largeItems = (await getCollection("piece", ({ data }) => data.type === "large")).sort(compare)
+  const smallItems = (await getCollection("piece", ({ data }) => data.type === "small")).sort(compare)
+  const moreItems = (await getCollection("piece", ({ data }) => data.type === "more")).sort(compare)
+  const singleItems = (await getCollection("piece", ({ data }) => data.type === "single")).sort(compare)
+
+  const categories = [
+    { type: "medium", entries: mediumItems },
+    { type: "large", entries: largeItems },
+    { type: "small", entries: smallItems },
+    { type: "more", entries: moreItems },
+    { type: "single", entries: singleItems }
+  ]
+
+  return categories.flatMap(({ entries, type }) => {
+    return entries.map((entry, j) => {
+      const { prev, next } = pager(entries, j)
+      return {
+        params: { type, piece: entry.id },
+        props: {
+          piece: entry,
+          next: "/" + type + next,
+          prev: "/" + type + prev,
+          progress: Math.floor((j / (entries.length - 1)) * 100)
+        }
       }
-    }
+    })
   })
 }
 
@@ -183,24 +199,5 @@ const { Content } = await render(piece)
   :global([data-anki-mode="true"]) .--ja {
     background-color: #ff8dc7;
     color: #ff8dc7;
-  }
-
-  .--large {
-    color: var(--rose-400);
-  }
-  .--medium {
-    color: var(--green-400);
-  }
-  .--small {
-    color: var(--sky-400);
-  }
-  .--single {
-    color: var(--orange-400);
-  }
-  .--more {
-    color: var(--violet-400);
-  }
-  .--word {
-    color: var(--slate-300);
   }
 </style>

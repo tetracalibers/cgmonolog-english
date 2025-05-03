@@ -1,0 +1,143 @@
+---
+import HtmlDocument from "$/layout/HtmlDocument.astro"
+import { getCollection } from "astro:content"
+import PuzzleIcon from "~icons/game-icons/jigsaw-piece"
+
+export async function getStaticPaths() {
+  const compare = (a: { data: { index: number } }, b: { data: { index: number } }) => a.data.index - b.data.index
+
+  const mediumItems = (await getCollection("piece", ({ data }) => data.type === "medium")).sort(compare)
+  const largeItems = (await getCollection("piece", ({ data }) => data.type === "large")).sort(compare)
+  const smallItems = (await getCollection("piece", ({ data }) => data.type === "small")).sort(compare)
+  const moreItems = (await getCollection("piece", ({ data }) => data.type === "more")).sort(compare)
+  const singleItems = (await getCollection("piece", ({ data }) => data.type === "single")).sort(compare)
+
+  return [
+    {
+      params: { type: "medium" },
+      props: {
+        pieces: mediumItems,
+        title: "後ろに動詞が続くフレーズ",
+        desc: "基本的な英文を作るブロック"
+      }
+    },
+    {
+      params: { type: "large" },
+      props: {
+        pieces: largeItems,
+        title: "後ろに文章が続くフレーズ",
+        desc: "長い文章を作るためのブロック"
+      }
+    },
+    {
+      params: { type: "small" },
+      props: {
+        pieces: smallItems,
+        title: "具体的な情報を示すフレーズ",
+        desc: "ブロックに埋めて使う、動詞・名詞・形容詞"
+      }
+    },
+    {
+      params: { type: "more" },
+      props: {
+        pieces: moreItems,
+        title: "細かいニュアンスを加えるフレーズ",
+        desc: "なくても文章は成り立つ"
+      }
+    },
+    {
+      params: { type: "single" },
+      props: {
+        pieces: singleItems,
+        title: "単体で成り立つフレーズ",
+        desc: "そのまま使える"
+      }
+    }
+  ]
+}
+
+const { type } = Astro.params
+const { pieces, title, desc } = Astro.props
+---
+
+<HtmlDocument title="cgmonolog-english">
+  <div class="container">
+    <div class="title-wrapper">
+      <h1 class="title">{title}</h1>
+      <span class="title-desc">{desc}</span>
+    </div>
+    <ul class="PieceList">
+      {
+        pieces.map((piece) => (
+          <li>
+            <a href={`/${type}/${piece.id}`} class={`--${piece.data.type} PieceLink`}>
+              <PuzzleIcon />
+              <span class="PieceLink-text">{piece.data.shape}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <a href="/" class="home-link">トップに戻る</a>
+  </div>
+</HtmlDocument>
+
+<style>
+  .title-wrapper {
+    text-align: center;
+    display: grid;
+    gap: 0.25rem;
+  }
+  .title {
+    padding-inline: 1rem;
+    padding-block: 0;
+    margin: 0;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    font-weight: 400;
+    word-break: auto-phrase;
+  }
+
+  .container {
+    display: grid;
+    gap: 3rem;
+    padding-block: 3rem;
+  }
+
+  .PieceList {
+    list-style: none;
+    margin-block: 0;
+    margin-inline: auto;
+    display: flex;
+    width: fit-content;
+    flex-wrap: wrap;
+    column-gap: 2rem;
+    row-gap: 1rem;
+    padding-inline: 2rem;
+  }
+  .PieceLink {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: clamp(1rem, 0.82rem + 0.768vw, 1.25rem);
+    line-height: 1.7;
+    text-decoration-line: underline;
+    text-decoration-style: dashed;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+  .PieceLink :global(svg) {
+    flex-shrink: 0;
+  }
+  .PieceLink-text {
+    color: var(--slate-500);
+  }
+
+  .home-link {
+    line-height: 1.7;
+    font-size: 0.95rem;
+    color: var(--slate-500);
+    text-decoration: none;
+    text-align: center;
+  }
+</style>

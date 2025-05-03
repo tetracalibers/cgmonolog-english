@@ -13,7 +13,7 @@ const pieces = (await getCollection("piece")).sort((a, b) => a.data.meaning.loca
       {
         pieces.map((piece) => (
           <li>
-            <a href={`/${piece.id}`} class={`--${piece.data.type} PieceLink`}>
+            <a href={`/${piece.data.type}/${piece.id}`} class={`--${piece.data.type} PieceLink`}>
               <PuzzleIcon />
               <span class="PieceLink-text">{piece.data.meaning}</span>
             </a>
