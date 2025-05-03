@@ -13,9 +13,7 @@ const { prev, next, progress, type = "default" } = Astro.props
 ---
 
 <div class="Header">
-  <a href="/" class="heading-link">
-    <h1 class="heading">cgmonolog-english</h1>
-  </a>
+  <div class="slot"><slot /></div>
   <div class="container">
     <nav class="nav">
       <a href={prev}>
@@ -43,34 +41,9 @@ const { prev, next, progress, type = "default" } = Astro.props
     background-color: white;
     z-index: 10;
   }
-  :is(.heading-link, .container) {
+  :is(.slot, .container) {
     grid-column: 1 / -1;
     grid-row: 1 / -1;
-  }
-  .heading-link {
-    color: inherit;
-    margin-inline: auto;
-    width: fit-content;
-    height: fit-content;
-    z-index: 2;
-  }
-  .heading {
-    margin: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    font-size: 1.125rem;
-    line-height: 1.75rem;
-    font-weight: 600;
-    font-style: italic;
-  }
-  .heading :global(svg) {
-    transform: rotate(12deg);
-    justify-self: center;
-    text-align: center;
-    font-size: 1.875rem;
-    line-height: 2.25rem;
   }
 
   .container {

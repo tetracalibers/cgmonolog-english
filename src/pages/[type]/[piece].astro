@@ -5,7 +5,8 @@ import PuzzleIcon from "~icons/game-icons/jigsaw-piece"
 import EducationIcon from "~icons/material-symbols-light/history-edu"
 import Header from "$/components/header/Header.astro"
 import SpeakerProvider from "$/components/audio-player/SpeakerProvider.svelte"
-import WithAnkiMode from "$/components/WithAnkiMode.svelte"
+import WithAnkiMode from "$/components/anki-mode/WithAnkiMode.svelte"
+import SwitchAnkiMode from "$/components/anki-mode/SwitchAnkiMode.svelte"
 import { pager } from "$/lib/slug"
 import { getCollection, render } from "astro:content"
 
@@ -47,7 +48,9 @@ const { Content } = await render(piece)
 ---
 
 <HtmlDocument title={piece.data.shape}>
-  <Header prev={prev} next={next} progress={progress} type={piece.data.type} />
+  <Header prev={prev} next={next} progress={progress} type={piece.data.type}>
+    <SwitchAnkiMode client:load />
+  </Header>
   <div class="container">
     <div class="heading-container">
       <div class={`heading-icon --${piece.data.type}`}><PuzzleIcon /></div>
@@ -56,34 +59,35 @@ const { Content } = await render(piece)
       </h2>
       {piece.data.meaning && <div class="meaning">{piece.data.meaning}</div>}
     </div>
-    <WithAnkiMode client:load>
-      <SpeakerProvider client:only="svelte">
-        <div class="items-container">
-          {
-            piece.data.examples.map((example, i) => (
-              <div class="item">
-                <div class="item-lang">
-                  <div class="item-sentence">
-                    {example.scene && <div class="item-scene">{example.scene}</div>}
-                    <div class="item-main">
-                      <div class="--en">{example.en}</div>
-                      <div class="--ja">{example.ja}</div>
+    <SpeakerProvider client:only="svelte">
+      <div class="items-container">
+        {
+          piece.data.examples.map((example, i) => (
+            <div class="item">
+              <div class="item-lang">
+                <div class="item-sentence">
+                  {example.scene && <div class="item-scene">{example.scene}</div>}
+                  <div class="item-main">
+                    <div class="--en">{example.en}</div>
+                    <div class="--ja">
+                      <WithAnkiMode client:load>{example.ja}</WithAnkiMode>
                     </div>
                   </div>
-                  <div class="item-player">
-                    <AudioPlayer text={example.en} client:only="svelte" />
-                  </div>
+                </div>
+                <div class="item-player">
+                  <AudioPlayer text={example.en} client:only="svelte" />
                 </div>
               </div>
-            ))
-          }
-        </div>
-      </SpeakerProvider>
-    </WithAnkiMode>
+            </div>
+          ))
+        }
+      </div>
+    </SpeakerProvider>
     <div class="content-wrapper">
       <EducationIcon />
       <Content />
     </div>
+    <a href="/" class="home-link">トップに戻る</a>
   </div>
 </HtmlDocument>
 
@@ -196,8 +200,16 @@ const { Content } = await render(piece)
     font-weight: 300;
     font-size: 0.9em;
   }
-  :global([data-anki-mode="true"]) .--ja {
+  .--ja :global([data-anki-mode="true"]) {
     background-color: #ff8dc7;
     color: #ff8dc7;
+  }
+
+  .home-link {
+    line-height: 1.7;
+    font-size: 0.95rem;
+    color: var(--slate-500);
+    text-decoration: none;
+    text-align: center;
   }
 </style>
