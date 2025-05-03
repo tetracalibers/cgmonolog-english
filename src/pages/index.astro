@@ -6,9 +6,12 @@ import { getPieces } from "$/lib/collection"
 const pieces = await getPieces()
 ---
 
-<HtmlDocument title="CG English">
-  <section class="container">
-    <h1 class="PieceTitle">English Pieces</h1>
+<HtmlDocument title="cgmonolog-english">
+  <div class="container">
+    <header class="header">
+      <h1 class="PieceTitle">cgmonolog-english</h1>
+      <p class="subtitle">英語でつぶやく「CGエンジニアのひとり言」</p>
+    </header>
     <ul class="PieceList">
       {
         pieces.map((piece) => (
@@ -21,17 +24,31 @@ const pieces = await getPieces()
         ))
       }
     </ul>
-  </section>
+    <nav class="nav">
+      <ul>
+        <li>
+          <a href="/from-en">アルファベット順で探す</a>
+        </li>
+        <li>
+          <a href="/from-ja">日本語から探す</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
 </HtmlDocument>
 
 <style>
   .container {
     display: grid;
     gap: 3rem;
-    padding-block-start: 3rem;
-    padding-block-end: 5rem;
+    padding-block: 3rem;
   }
 
+  .header {
+    display: grid;
+    gap: 1rem;
+    padding-inline: 1rem;
+  }
   .PieceTitle {
     padding-inline: 1rem;
     padding-block: 0;
@@ -41,6 +58,28 @@ const pieces = await getPieces()
     line-height: 2.25rem;
     font-weight: 400;
   }
+  .subtitle {
+    margin: 0;
+    font-size: clamp(0.9rem, 0.756rem + 0.614vw, 1.1rem);
+    text-align: center;
+    word-break: auto-phrase;
+  }
+
+  .nav {
+    display: grid;
+    place-items: center;
+  }
+  .nav ul {
+    margin: 0;
+    line-height: 1.7;
+    font-size: 0.95rem;
+    padding-inline-start: 1rem;
+  }
+  .nav a {
+    color: var(--slate-500);
+    text-decoration: none;
+  }
+
   .PieceList {
     list-style: none;
     margin-block: 0;
@@ -56,8 +95,8 @@ const pieces = await getPieces()
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 1.25rem;
-    line-height: 1.75rem;
+    font-size: clamp(1rem, 0.82rem + 0.768vw, 1.25rem);
+    line-height: 1.7;
     text-decoration-line: underline;
     text-decoration-style: dashed;
     text-decoration-thickness: 2px;
