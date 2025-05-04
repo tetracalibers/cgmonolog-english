@@ -1,6 +1,7 @@
 ---
 import BackIcon from "~icons/emojione-monotone/back-arrow"
 import NextIcon from "~icons/emojione-monotone/soon-arrow"
+import PuzzleIcon from "~icons/game-icons/jigsaw-piece"
 
 interface Props {
   prev: string
@@ -10,21 +11,38 @@ interface Props {
 }
 
 const { prev, next, progress, type = "default" } = Astro.props
+
+const types = ["medium", "large", "small", "more", "single"]
 ---
 
 <div class="Header">
-  <div class="slot"><slot /></div>
-  <div class="container">
-    <nav class="nav">
-      <a href={prev}>
-        <BackIcon />
-      </a>
-      <a href={next}>
-        <NextIcon />
-      </a>
-    </nav>
+  <nav class="types-nav">
+    <ul>
+      {
+        types.map((type) => (
+          <li>
+            <a href={`/${type}`} class={`--${type}`}>
+              <PuzzleIcon />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+  <div class="header-layout">
+    <div class="header-content">
+      <div class="slot"><slot /></div>
+      <div class="prev-next-nav">
+        <a href={prev}>
+          <BackIcon />
+        </a>
+        <a href={next}>
+          <NextIcon />
+        </a>
+      </div>
+    </div>
     <div class="progress-wrapper">
-      <div class={`progress --${type}`}>
+      <div class={`progress --bg-${type}`}>
         <span class="progress-label">{progress}%</span>
       </div>
     </div>
@@ -35,32 +53,55 @@ const { prev, next, progress, type = "default" } = Astro.props
   .Header {
     color: var(--slate-400);
     display: grid;
-    padding-block-start: 2rem;
+    gap: 0.5rem;
+    padding-block-start: 1.5rem;
     position: sticky;
     top: 0;
     background-color: white;
     z-index: 10;
   }
-  :is(.slot, .container) {
+
+  .header-layout {
+    display: grid;
+    gap: 1rem;
+    align-items: center;
+  }
+  :is(.slot, .prev-next-nav) {
     grid-column: 1 / -1;
     grid-row: 1 / -1;
   }
 
-  .container {
+  .header-content {
     display: grid;
     gap: 1rem;
+    align-items: center;
   }
-  .nav {
+
+  .types-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+  .types-nav :global(svg) {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .prev-next-nav {
     display: flex;
     justify-content: space-between;
     padding-inline: 0.5rem;
     font-size: 1.875rem;
     line-height: 2.25rem;
   }
-  .nav a {
+  .prev-next-nav a {
     color: inherit;
   }
-  .nav :global(svg) {
+  .prev-next-nav :global(svg) {
     display: flex;
   }
 
@@ -77,27 +118,5 @@ const { prev, next, progress, type = "default" } = Astro.props
   .progress-label {
     display: inline-block;
     padding-inline: 0.25rem;
-  }
-
-  .--large {
-    background-color: var(--rose-400);
-  }
-  .--medium {
-    background-color: var(--green-400);
-  }
-  .--small {
-    background-color: var(--sky-400);
-  }
-  .--single {
-    background-color: var(--orange-400);
-  }
-  .--more {
-    background-color: var(--violet-400);
-  }
-  .--word {
-    background-color: var(--slate-300);
-  }
-  .--default {
-    background-color: var(--slate-400);
   }
 </style>
