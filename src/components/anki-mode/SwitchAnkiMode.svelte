@@ -14,6 +14,7 @@
     justify-content: center;
     gap: 0.5rem;
     accent-color: #ff8dc7;
+    color: var(--slate-500);
   }
   input {
     scale: 1.5;
