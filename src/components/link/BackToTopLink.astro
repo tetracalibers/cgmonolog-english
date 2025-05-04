@@ -1,0 +1,25 @@
+---
+import GameIconsPuzzle from "~icons/game-icons/puzzle"
+---
+
+<a href="/" class="top-link" title="トップへ戻る">
+  cgmonolog <GameIconsPuzzle /> english
+</a>
+
+<style>
+  .top-link {
+    color: var(--slate-400);
+    margin-inline: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-style: italic;
+    text-decoration: none;
+  }
+  .top-link :global(svg) {
+    width: 2rem;
+    height: 2rem;
+    rotate: 45deg;
+  }
+</style>

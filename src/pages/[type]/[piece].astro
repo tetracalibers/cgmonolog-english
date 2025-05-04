@@ -9,6 +9,7 @@ import WithAnkiMode from "$/components/anki-mode/WithAnkiMode.svelte"
 import SwitchAnkiMode from "$/components/anki-mode/SwitchAnkiMode.svelte"
 import { pager } from "$/lib/slug"
 import { getCollection, render } from "astro:content"
+import BackToTopLink from "$/components/link/BackToTopLink.astro"
 
 export async function getStaticPaths() {
   const compare = (a: { data: { index: number } }, b: { data: { index: number } }) => a.data.index - b.data.index
@@ -88,7 +89,7 @@ const { Content } = await render(piece)
       <EducationIcon />
       <Content />
     </div>
-    <a href={`/${type}`} class="back-link">一覧に戻る</a>
+    <BackToTopLink />
   </div>
 </HtmlDocument>
 
@@ -202,13 +203,5 @@ const { Content } = await render(piece)
   .--ja :global([data-anki-mode="true"]) {
     background-color: #ff8dc7;
     color: #ff8dc7;
-  }
-
-  .back-link {
-    line-height: 1.7;
-    font-size: 0.95rem;
-    color: var(--slate-500);
-    text-decoration: none;
-    text-align: center;
   }
 </style>

@@ -1,4 +1,5 @@
 ---
+import BackToTopLink from "$/components/link/BackToTopLink.astro"
 import HtmlDocument from "$/layout/HtmlDocument.astro"
 import { getCollection } from "astro:content"
 import PuzzleIcon from "~icons/game-icons/jigsaw-piece"
@@ -62,9 +63,12 @@ const { pieces, title, desc } = Astro.props
 
 <HtmlDocument title="cgmonolog-english">
   <div class="container">
-    <div class="title-wrapper">
-      <h1 class="title">{title}</h1>
-      <span class="title-desc">{desc}</span>
+    <div class="header">
+      <BackToTopLink />
+      <div class="title-wrapper">
+        <h1 class="title">{title}</h1>
+        <span class="title-desc">{desc}</span>
+      </div>
     </div>
     <ul class="PieceList">
       {
@@ -78,7 +82,6 @@ const { pieces, title, desc } = Astro.props
         ))
       }
     </ul>
-    <a href="/" class="home-link">トップに戻る</a>
   </div>
 </HtmlDocument>
 
@@ -102,6 +105,11 @@ const { pieces, title, desc } = Astro.props
     display: grid;
     gap: 3rem;
     padding-block: 3rem;
+  }
+
+  .header {
+    display: grid;
+    gap: 2rem;
   }
 
   .PieceList {
@@ -131,13 +139,5 @@ const { pieces, title, desc } = Astro.props
   }
   .PieceLink-text {
     color: var(--slate-500);
-  }
-
-  .home-link {
-    line-height: 1.7;
-    font-size: 0.95rem;
-    color: var(--slate-500);
-    text-decoration: none;
-    text-align: center;
   }
 </style>

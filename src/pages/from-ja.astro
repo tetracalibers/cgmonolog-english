@@ -2,13 +2,17 @@
 import HtmlDocument from "$/layout/HtmlDocument.astro"
 import PuzzleIcon from "~icons/game-icons/jigsaw-piece"
 import { getCollection } from "astro:content"
+import BackToTopLink from "$/components/link/BackToTopLink.astro"
 
 const pieces = (await getCollection("piece")).sort((a, b) => a.data.meaning.localeCompare(b.data.meaning))
 ---
 
 <HtmlDocument title="cgmonolog-english">
   <section class="container">
-    <h1 class="PieceTitle">日本語から探す</h1>
+    <div class="header">
+      <BackToTopLink />
+      <h1 class="PieceTitle">日本語から探す</h1>
+    </div>
     <ul class="PieceList">
       {
         pieces.map((piece) => (
@@ -21,7 +25,6 @@ const pieces = (await getCollection("piece")).sort((a, b) => a.data.meaning.loca
         ))
       }
     </ul>
-    <a href="/" class="home-link">トップに戻る</a>
   </section>
 </HtmlDocument>
 
@@ -30,6 +33,11 @@ const pieces = (await getCollection("piece")).sort((a, b) => a.data.meaning.loca
     display: grid;
     gap: 3rem;
     padding-block: 3rem;
+  }
+
+  .header {
+    display: grid;
+    gap: 2rem;
   }
 
   .PieceTitle {
@@ -69,13 +77,5 @@ const pieces = (await getCollection("piece")).sort((a, b) => a.data.meaning.loca
   }
   .PieceLink-text {
     color: var(--slate-500);
-  }
-
-  .home-link {
-    line-height: 1.7;
-    font-size: 0.95rem;
-    color: var(--slate-500);
-    text-decoration: none;
-    text-align: center;
   }
 </style>
