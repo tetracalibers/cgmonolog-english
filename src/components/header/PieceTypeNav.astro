@@ -1,0 +1,35 @@
+---
+import PuzzleIcon from "~icons/game-icons/jigsaw-piece"
+
+const types = ["medium", "large", "small", "more", "single"]
+---
+
+<nav class="types-nav">
+  <ul>
+    {
+      types.map((type) => (
+        <li>
+          <a href={`/${type}`} class={`--${type}`}>
+            <PuzzleIcon />
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .types-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+  .types-nav :global(svg) {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+</style>

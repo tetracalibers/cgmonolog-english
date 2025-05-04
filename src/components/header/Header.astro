@@ -1,7 +1,7 @@
 ---
 import BackIcon from "~icons/emojione-monotone/back-arrow"
 import NextIcon from "~icons/emojione-monotone/soon-arrow"
-import PuzzleIcon from "~icons/game-icons/jigsaw-piece"
+import PieceTypeNav from "./PieceTypeNav.astro"
 
 interface Props {
   prev: string
@@ -11,24 +11,10 @@ interface Props {
 }
 
 const { prev, next, progress, type = "default" } = Astro.props
-
-const types = ["medium", "large", "small", "more", "single"]
 ---
 
 <div class="Header">
-  <nav class="types-nav">
-    <ul>
-      {
-        types.map((type) => (
-          <li>
-            <a href={`/${type}`} class={`--${type}`}>
-              <PuzzleIcon />
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </nav>
+  <PieceTypeNav />
   <div class="header-layout">
     <div class="header-content">
       <div class="slot"><slot /></div>
@@ -75,20 +61,6 @@ const types = ["medium", "large", "small", "more", "single"]
     display: grid;
     gap: 1rem;
     align-items: center;
-  }
-
-  .types-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-  }
-  .types-nav :global(svg) {
-    width: 1.5rem;
-    height: 1.5rem;
   }
 
   .prev-next-nav {

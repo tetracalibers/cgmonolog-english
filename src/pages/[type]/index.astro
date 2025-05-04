@@ -1,4 +1,5 @@
 ---
+import PieceTypeNav from "$/components/header/PieceTypeNav.astro"
 import BackToTopLink from "$/components/link/BackToTopLink.astro"
 import HtmlDocument from "$/layout/HtmlDocument.astro"
 import { getCollection } from "astro:content"
@@ -64,7 +65,7 @@ const { pieces, title, desc } = Astro.props
 <HtmlDocument title="cgmonolog-english">
   <div class="container">
     <div class="header">
-      <BackToTopLink />
+      <PieceTypeNav />
       <div class="title-wrapper">
         <h1 class="title">{title}</h1>
         <span class="title-desc">{desc}</span>
@@ -82,6 +83,7 @@ const { pieces, title, desc } = Astro.props
         ))
       }
     </ul>
+    <BackToTopLink />
   </div>
 </HtmlDocument>
 
