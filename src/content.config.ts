@@ -7,7 +7,7 @@ const piece = defineCollection({
     shape: z.string(), // 単語やイディオムそのもののスペルや、その抽象形
     meaning: z.string(), // 意味
     type: z.enum(["large", "medium", "small", "single", "more", "word"]), // どのピースとして使われるか
-    index: z.coerce.number().int(), // 順序決定に使われる、章番号など
+    index: z.coerce.number(), // 順序決定に使われる、章番号など
     cite: z.string().optional(), // 出典
     examples: z
       .object({
