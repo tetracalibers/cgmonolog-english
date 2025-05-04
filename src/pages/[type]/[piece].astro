@@ -58,7 +58,7 @@ const { Content } = await render(piece)
       <h2 class="heading">
         {piece.data.shape}
       </h2>
-      {piece.data.meaning && <div class="meaning">{piece.data.meaning}</div>}
+      <div class="meaning">{piece.data.meaning}</div>
     </div>
     <SpeakerProvider client:only="svelte">
       <div class="items-container">
