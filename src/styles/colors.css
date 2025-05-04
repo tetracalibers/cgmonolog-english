@@ -1,18 +1,46 @@
+:root {
+  --large-color: var(--rose-400);
+  --medium-color: var(--green-400);
+  --small-color: var(--sky-400);
+  --single-color: var(--orange-400);
+  --more-color: var(--violet-400);
+  --word-color: var(--slate-300);
+}
+
 .--large {
-  color: var(--rose-400);
+  color: var(--large-color);
 }
 .--medium {
-  color: var(--green-400);
+  color: var(--medium-color);
 }
 .--small {
-  color: var(--sky-400);
+  color: var(--small-color);
 }
 .--single {
-  color: var(--orange-400);
+  color: var(--single-color);
 }
 .--more {
-  color: var(--violet-400);
+  color: var(--more-color);
 }
 .--word {
-  color: var(--slate-300);
+  color: var(--word-color);
+}
+
+.--bg-large {
+  background-color: var(--large-color);
+}
+.--bg-medium {
+  background-color: var(--medium-color);
+}
+.--bg-small {
+  background-color: var(--small-color);
+}
+.--bg-single {
+  background-color: var(--single-color);
+}
+.--bg-more {
+  background-color: var(--more-color);
+}
+.--bg-word {
+  background-color: var(--word-color);
 }
