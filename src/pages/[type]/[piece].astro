@@ -1,14 +1,13 @@
 ---
 import AudioPlayer from "$/components/audio-player/AudioPlayer.svelte"
 import HtmlDocument from "$/layout/HtmlDocument.astro"
-import PuzzleIcon from "~icons/game-icons/jigsaw-piece"
-import EducationIcon from "~icons/material-symbols-light/history-edu"
 import Header from "$/components/header/Header.astro"
 import SpeakerProvider from "$/components/audio-player/SpeakerProvider.svelte"
 import WithAnkiMode from "$/components/anki-mode/WithAnkiMode.svelte"
 import SwitchAnkiMode from "$/components/anki-mode/SwitchAnkiMode.svelte"
 import { pager } from "$/lib/slug"
 import { getCollection, render } from "astro:content"
+import { Icon } from "astro-icon/components"
 import BackToTopLink from "$/components/link/BackToTopLink.astro"
 
 export async function getStaticPaths() {
@@ -55,7 +54,9 @@ const { Content } = await render(piece)
   </Header>
   <div class="container">
     <div class="heading-container">
-      <div class={`heading-icon --${type}`}><PuzzleIcon /></div>
+      <div class={`heading-icon --${type}`}>
+        <Icon name="game-icons:jigsaw-piece" />
+      </div>
       <h2 class="heading">
         {piece.data.shape}
       </h2>
@@ -86,7 +87,7 @@ const { Content } = await render(piece)
       </div>
     </SpeakerProvider>
     <div class="content-wrapper">
-      <EducationIcon />
+      <Icon name="material-symbols-light:history-edu" />
       <Content />
     </div>
     <BackToTopLink />
@@ -110,6 +111,7 @@ const { Content } = await render(piece)
   }
   .heading-icon {
     display: flex;
+    font-size: 1.2em;
   }
   .heading {
     font-weight: 400;
@@ -140,8 +142,7 @@ const { Content } = await render(piece)
     position: absolute;
     left: -1.5rem;
     top: -1.5rem;
-    width: 3rem;
-    height: 3rem;
+    font-size: 3rem;
     color: var(--slate-400);
   }
   .content-wrapper :global(:is(p, ul)) {

@@ -3,7 +3,7 @@ import PieceTypeNav from "$/components/header/PieceTypeNav.astro"
 import BackToTopLink from "$/components/link/BackToTopLink.astro"
 import HtmlDocument from "$/layout/HtmlDocument.astro"
 import { getCollection } from "astro:content"
-import PuzzleIcon from "~icons/game-icons/jigsaw-piece"
+import { Icon } from "astro-icon/components"
 
 export async function getStaticPaths() {
   const compare = (a: { data: { index: number } }, b: { data: { index: number } }) => a.data.index - b.data.index
@@ -76,7 +76,7 @@ const { pieces, title, desc } = Astro.props
         pieces.map((piece) => (
           <li>
             <a href={`/${type}/${piece.id}`} class={`--${piece.data.type} PieceLink`}>
-              <PuzzleIcon />
+              <Icon name="game-icons:jigsaw-piece" />
               <span class="PieceLink-text">{piece.data.shape}</span>
             </a>
           </li>
@@ -138,6 +138,7 @@ const { pieces, title, desc } = Astro.props
   }
   .PieceLink :global(svg) {
     flex-shrink: 0;
+    font-size: 1.2em;
   }
   .PieceLink-text {
     color: var(--slate-500);

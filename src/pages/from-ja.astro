@@ -1,7 +1,7 @@
 ---
 import HtmlDocument from "$/layout/HtmlDocument.astro"
-import PuzzleIcon from "~icons/game-icons/jigsaw-piece"
 import { getCollection } from "astro:content"
+import { Icon } from "astro-icon/components"
 import BackToTopLink from "$/components/link/BackToTopLink.astro"
 
 const pieces = (await getCollection("piece")).sort((a, b) => a.data.meaning.localeCompare(b.data.meaning))
@@ -18,7 +18,7 @@ const pieces = (await getCollection("piece")).sort((a, b) => a.data.meaning.loca
         pieces.map((piece) => (
           <li>
             <a href={`/${piece.data.type}/${piece.id}`} class={`--${piece.data.type} PieceLink`}>
-              <PuzzleIcon />
+              <Icon name="game-icons:jigsaw-piece" />
               <span class="PieceLink-text">{piece.data.meaning}</span>
             </a>
           </li>
@@ -74,6 +74,7 @@ const pieces = (await getCollection("piece")).sort((a, b) => a.data.meaning.loca
   }
   .PieceLink :global(svg) {
     flex-shrink: 0;
+    font-size: 1.2em;
   }
   .PieceLink-text {
     color: var(--slate-500);

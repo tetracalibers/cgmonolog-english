@@ -1,9 +1,9 @@
 ---
-import GameIconsPuzzle from "~icons/game-icons/puzzle"
+import { Icon } from "astro-icon/components"
 ---
 
 <a href="/" class="top-link" title="トップへ戻る">
-  cgmonolog <GameIconsPuzzle /> english
+  cgmonolog <Icon name="game-icons:puzzle" /> english
 </a>
 
 <style>
@@ -18,8 +18,7 @@ import GameIconsPuzzle from "~icons/game-icons/puzzle"
     text-decoration: none;
   }
   .top-link :global(svg) {
-    width: 2rem;
-    height: 2rem;
+    font-size: 2rem;
     rotate: 45deg;
   }
 </style>

@@ -1,5 +1,5 @@
 ---
-import PuzzleIcon from "~icons/game-icons/jigsaw-piece"
+import { Icon } from "astro-icon/components"
 
 const types = ["medium", "large", "small", "more", "single"]
 ---
@@ -10,7 +10,7 @@ const types = ["medium", "large", "small", "more", "single"]
       types.map((type) => (
         <li>
           <a href={`/${type}`} class={`--${type}`}>
-            <PuzzleIcon />
+            <Icon name="game-icons:jigsaw-piece" />
           </a>
         </li>
       ))
@@ -29,7 +29,6 @@ const types = ["medium", "large", "small", "more", "single"]
     gap: 1rem;
   }
   .types-nav :global(svg) {
-    width: 1.5rem;
-    height: 1.5rem;
+    font-size: 1.5rem;
   }
 </style>

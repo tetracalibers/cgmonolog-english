@@ -1,7 +1,6 @@
 ---
-import BackIcon from "~icons/emojione-monotone/back-arrow"
-import NextIcon from "~icons/emojione-monotone/soon-arrow"
 import PieceTypeNav from "./PieceTypeNav.astro"
+import { Icon } from "astro-icon/components"
 
 interface Props {
   prev: string
@@ -20,10 +19,10 @@ const { prev, next, progress, type = "default" } = Astro.props
       <div class="slot"><slot /></div>
       <div class="prev-next-nav">
         <a href={prev}>
-          <BackIcon />
+          <Icon name="emojione-monotone:back-arrow" />
         </a>
         <a href={next}>
-          <NextIcon />
+          <Icon name="emojione-monotone:soon-arrow" />
         </a>
       </div>
     </div>
@@ -75,6 +74,7 @@ const { prev, next, progress, type = "default" } = Astro.props
   }
   .prev-next-nav :global(svg) {
     display: flex;
+    font-size: 1.2em;
   }
 
   .progress-wrapper {

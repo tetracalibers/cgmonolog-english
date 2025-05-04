@@ -1,6 +1,6 @@
 ---
 import HtmlDocument from "$/layout/HtmlDocument.astro"
-import PuzzleIcon from "~icons/game-icons/jigsaw-piece"
+import { Icon } from "astro-icon/components"
 
 const types = [
   { type: "medium", title: "後ろに動詞が続くフレーズ", desc: "基本的な英文を作るブロック、まずはここから" },
@@ -25,7 +25,7 @@ const types = [
             <li class={`--${type}`}>
               <div class="study-item">
                 <a href={`/${type}`}>
-                  <PuzzleIcon />
+                  <Icon name="game-icons:jigsaw-piece" />
                   {title}
                 </a>
                 <span class="study-item-desc">{desc}</span>
@@ -120,6 +120,7 @@ const types = [
   }
   .study-item :global(svg) {
     flex-shrink: 0;
+    font-size: 1.2em;
   }
   .study-item-desc {
     font-size: 0.9rem;
