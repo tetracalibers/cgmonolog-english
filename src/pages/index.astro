@@ -1,6 +1,14 @@
 ---
 import HtmlDocument from "$/layout/HtmlDocument.astro"
 import PuzzleIcon from "~icons/game-icons/jigsaw-piece"
+
+const types = [
+  { type: "medium", title: "後ろに動詞が続くフレーズ", desc: "基本的な英文を作るブロック、まずはここから" },
+  { type: "large", title: "後ろに文章が続くフレーズ", desc: "長い文章を作るためのブロック" },
+  { type: "small", title: "具体的な情報を示すフレーズ", desc: "ブロックに埋めて使う、動詞・名詞・形容詞" },
+  { type: "more", title: "細かいニュアンスを加えるフレーズ", desc: "なくても文章は成り立つ" },
+  { type: "single", title: "単体で成り立つフレーズ", desc: "そのまま使える" }
+]
 ---
 
 <HtmlDocument title="cgmonolog-english">
@@ -12,36 +20,19 @@ import PuzzleIcon from "~icons/game-icons/jigsaw-piece"
     <section class="section study-section">
       <h2>Let's study</h2>
       <ul>
-        <li class="--medium">
-          <div class="study-item">
-            <a href="/medium"><PuzzleIcon />後ろに動詞が続くフレーズ</a>
-            <span class="study-item-desc">基本的な英文を作るブロック、まずはここから</span>
-          </div>
-        </li>
-        <li class="--large">
-          <div class="study-item">
-            <a href="/large"><PuzzleIcon />後ろに文章が続くフレーズ</a>
-            <span class="study-item-desc">長い文章を作るためのブロック</span>
-          </div>
-        </li>
-        <li class="--small">
-          <div class="study-item">
-            <a href="/small"><PuzzleIcon />具体的な情報を示すフレーズ</a>
-            <span class="study-item-desc">ブロックに埋めて使う、動詞・名詞・形容詞</span>
-          </div>
-        </li>
-        <li class="--more">
-          <div class="study-item">
-            <a href="/more"><PuzzleIcon />細かいニュアンスを加えるフレーズ</a>
-            <span class="study-item-desc">なくても文章は成り立つ</span>
-          </div>
-        </li>
-        <li class="--single">
-          <div class="study-item">
-            <a href="/single"><PuzzleIcon />単体で成り立つフレーズ</a>
-            <span class="study-item-desc">そのまま使える</span>
-          </div>
-        </li>
+        {
+          types.map(({ type, title, desc }) => (
+            <li class={`--${type}`}>
+              <div class="study-item">
+                <a href={`/${type}`}>
+                  <PuzzleIcon />
+                  {title}
+                </a>
+                <span class="study-item-desc">{desc}</span>
+              </div>
+            </li>
+          ))
+        }
       </ul>
     </section>
     <!-- <ul class="PieceList">
