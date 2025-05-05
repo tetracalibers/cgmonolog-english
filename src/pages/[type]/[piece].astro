@@ -60,7 +60,9 @@ const { Content } = await render(piece)
       <h2 class="heading">
         {piece.data.shape}
       </h2>
-      <div class="meaning">{piece.data.meaning}</div>
+      <div class="meaning anki-hidden-area">
+        <WithAnkiMode client:load>{piece.data.meaning}</WithAnkiMode>
+      </div>
     </div>
     <SpeakerProvider client:only="svelte">
       <div class="items-container">
@@ -72,7 +74,7 @@ const { Content } = await render(piece)
                   {example.scene && <div class="item-scene">{example.scene}</div>}
                   <div class="item-main">
                     <div class="--en">{example.en}</div>
-                    <div class="--ja">
+                    <div class="--ja anki-hidden-area">
                       <WithAnkiMode client:load>{example.ja}</WithAnkiMode>
                     </div>
                   </div>
@@ -201,7 +203,8 @@ const { Content } = await render(piece)
     font-weight: 300;
     font-size: 0.9em;
   }
-  .--ja :global([data-anki-mode="true"]) {
+
+  .anki-hidden-area :global([data-anki-mode="true"]) {
     background-color: #ff8dc7;
     color: #ff8dc7;
   }
